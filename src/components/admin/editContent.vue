@@ -1,0 +1,236 @@
+<template>
+  <div class="container mx-auto text-sm pb-10 pt-10">
+    <div class="p-6 bg-gray-600 rounded-md">
+      <h3 class="text-lg text-white px-1 py-3 font-sans font-semibold tracking-widest">
+        Edit Post
+      </h3>
+      <div class="md:flex">
+        <div class="w-full px-3">
+          <label class="text-white">Title</label><br />
+          <input
+            type="text"
+            v-model="post.title"
+            class="bg-white text-gray-700 rounded-sm outline-none px-3 py-1 w-full mb-3"
+          />
+          <label class="text-white">Thumbnail URL</label><br />
+          <input
+            type="text"
+            v-model="post.thumbnail"
+            class="bg-white text-gray-700 rounded-sm outline-none px-3 py-1 w-full mb-3"
+          />
+          <ul class="text-gray-300 text-sm my-2">
+            <li
+              v-for="item in tags"
+              @click="selectCategory(item.tagname)"
+              :class="post.tag == item.tagname ? 'tagselected' : 'tagsnotselected'"
+              class="inline px-2 py-0.5 mb-2 m-1 rounded-lg uppercase text-xs"
+            >
+              {{ item.tagname }}
+            </li>
+          </ul>
+          <label class="text-white">Summary</label><br />
+          <textarea
+            type="text"
+            v-model="post.summary"
+            class="bg-white text-gray-700 rounded-sm outline-none px-3 py-1 w-full mb-3"
+          />
+
+          <label class="text-white">Content</label><br />
+          <textarea v-model="post.content" id="myTextarea"></textarea>
+          <button @click="updatePost" class="btn-scs">Post It</button>
+
+          <div
+            v-if="messageObject.show"
+            :class="messageObject.error ? 'bg-red-500/80' : 'bg-green-600/50'"
+            class="mt-2 p-3 rounded-md flex"
+          >
+            <div class="basis-10 text-center">
+              <i
+                :class="messageObject.error ? 'fa-exclamation-triangle' : 'fa-check'"
+                class="fas fa-check text-white"
+              ></i>
+            </div>
+            <div class="basis-full text-white border-l-2 px-3 border-l-gray-400">
+              {{ messageObject.message }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    :class="isloaded > 1 ? 'hidden' : ''"
+    class="z-50 grid place-items-center fixed top-0 w-screen h-screen bg-slate-600/40 backdrop-blur-sm mx-auto text-center"
+  >
+    <span class="text-white text-xl">
+      Please Wait While Components Loading <i class="far fa-spinner-third fa-spin"></i
+    ></span>
+  </div>
+</template>
+<script>
+import "../../assets/tinymce/tinymce.min.js";
+import "../../assets/tinymce/alljsfile";
+
+import { mapActions } from "vuex";
+
+export default {
+  data() {
+    return {
+      query: {
+        table: "",
+        where: "",
+        value: "",
+      },
+      messageObject: {
+        show: false,
+        error: false,
+        message: "Tags successfully saved",
+      },
+      post: {
+        title: "",
+        thumbnail: "",
+        author: "Serhad",
+        summary: "",
+        content: "",
+        tag: "",
+        postdate: "",
+        updateddate: "",
+        isdraft: 0,
+      },
+      queryConst: {
+        table: null,
+        id: null,
+      },
+      returned: [],
+
+      content: "",
+      selectedCategory: "",
+      tags: [],
+      tag: {
+        tagname: "",
+        tagdesc: "",
+      },
+      isloaded: false,
+    };
+  },
+  async created() {
+    this.gettags();
+    this.getPostDetail();
+  },
+  mounted() {
+    this.yasyasgleyy();
+  },
+  methods: {
+    ...mapActions({
+      gettag: "adminstore/getTags",
+      getdetail: "adminstore/getDetail",
+      updateAction: "adminstore/updateGeneral",
+    }),
+    async postContent() {
+      this.post.content = tinymce.get("myTextarea").getContent();
+
+      try {
+        await this.createpost({ payload: this.post });
+        this.messageObject.error = false;
+        this.messageObject.show = true;
+        this.messageObject.message = "Post successfully saved";
+      } catch (error) {
+        this.messageObject.error = true;
+        this.messageObject.show = true;
+        this.messageObject.message = error;
+
+        console.log(error);
+      }
+    },
+
+    selectCategory(category) {
+      this.post.tag = category;
+    },
+
+    async updatePost() {
+      try {
+        this.post.content = tinymce.get("myTextarea").getContent();
+        this.post.updateddate = Date.now();
+        await this.updateAction({
+          table: "posts",
+          id: this.$route.params.id,
+          payload: this.post,
+        });
+        this.messageObject.error = false;
+        this.messageObject.show = true;
+        this.messageObject.message = "Post successfully updated";
+      } catch (error) {
+        this.messageObject.error = true;
+        this.messageObject.show = true;
+        this.messageObject.message = error;
+
+        console.log(error);
+      }
+    },
+
+    async getPostDetail() {
+      this.isloaded = false;
+      try {
+        (this.queryConst.table = "posts"), (this.queryConst.id = this.$route.params.id);
+        let response = await this.getdetail({ payload: this.queryConst });
+        this.post = response;
+        tinymce.get("myTextarea").setContent(this.post.content);
+        this.isloaded = this.isloaded + 1;
+      } catch (error) {
+        console.log("errror" + error);
+      }
+    },
+
+    async gettags() {
+      this.tags = [];
+      try {
+        let response = await this.gettag();
+        let data = response.data;
+        for (let key in data) {
+          this.tags.push({ ...data[key], id: key });
+        }
+        this.isloaded = this.isloaded + 1;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    yasyasgleyy() {
+      tinymce.remove();
+      tinymce.init({
+        selector: "textarea#myTextarea",
+        skin: false,
+        content_css: "../../src/assets/tinymce/skins/content/default/content.min.css",
+        plugins:
+          "print preview paste importcss searchreplace autolink autosave save directionality code visualblocks visualchars fullscreen image link media template codesample table charmap hr pagebreak nonbreaking anchor toc insertdatetime advlist lists wordcount imagetools textpattern noneditable help charmap quickbars emoticons",
+        imagetools_cors_hosts: ["picsum.photos"],
+        menubar: "file edit view insert format tools table help",
+        toolbar:
+          "undo redo | bold italic underline strikethrough | fontselect fontsizeselect formatselect | alignleft aligncenter alignright alignjustify | outdent indent |  numlist bullist | forecolor backcolor removeformat | pagebreak | charmap emoticons | fullscreen  preview save print | insertfile image media template link anchor codesample | ltr rtl",
+        toolbar_sticky: true,
+        autosave_ask_before_unload: true,
+        autosave_interval: "30s",
+        autosave_prefix: "{path}{query}-{id}-",
+        autosave_restore_when_empty: false,
+        autosave_retention: "2m",
+        image_advtab: true,
+        /*content_css: '//www.tiny.cloud/css/codepen.min.css',*/
+
+        importcss_append: true,
+
+        templates: [],
+        template_cdate_format: "[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]",
+        template_mdate_format: "[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]",
+        image_caption: true,
+        quickbars_selection_toolbar:
+          "bold italic | quicklink h2 h3 blockquote quickimage quicktable",
+        noneditable_noneditable_class: "mceNonEditable",
+        toolbar_mode: "sliding",
+        contextmenu: "link image imagetools table",
+        height: 400,
+      });
+    },
+  },
+};
+</script>
