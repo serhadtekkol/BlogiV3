@@ -15,6 +15,7 @@ coverage
 *.local
 
 firebaseconf.js
+.VSCodeCounter/
 /cypress/videos/
 /cypress/screenshots/
 

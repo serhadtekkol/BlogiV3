@@ -57,9 +57,9 @@
       <div :class="inprogress ? 'blur-sm' : ''">
         <div
           v-for="(item, index) in tags"
-          class="bg-slate-400 basis-1/6 w-full p-3 rounded-md m-2 justify-between flex"
+          class="bg-slate-300 basis-1/6 w-full p-3 rounded-md m-2 justify-between flex"
         >
-          <span> {{ item.tagname }} <span>14</span></span>
+          <span> {{ item.tagname }} <span></span></span>
           <div>
             <button @click="edit(index)"><i class="far fa-edit"></i></button>
           </div>

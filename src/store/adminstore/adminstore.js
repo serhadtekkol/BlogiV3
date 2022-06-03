@@ -221,7 +221,72 @@ export const adminstore = {
 
 
 
-        }
+        },
+
+
+        async addNewMenu({ commit, dispatch }, { payload }) {
+            try {
+                console.log("asd")
+                const db = getDatabase();
+                set(ref(db, 'menu/' + uuidv4()), {
+                    menutitle: payload.menutitle,
+                    menuOrder: payload.menuOrder,
+                    link: payload.link,
+                    active: false,
+                    icon: payload.icon,
+
+                    posteddate: Date.now(),
+                    updateddate: Date.now(),
+
+
+
+                });
+                return Promise.resolve("success");
+
+            } catch (error) {
+                return Promise.reject(error);
+            }
+
+
+
+
+
+
+        },
+
+
+
+
+
+        async getList({ commit, dispatch }, payload) {
+
+            const url = payload + "/";
+
+            try {
+
+                const dbRef = ref(getDatabase());
+                var c = get(child(dbRef, url)).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        return snapshot.val();
+
+                    } else {
+                        console.log("No data available");
+                    }
+
+                }).catch((error) => {
+                    console.error(error);
+                });
+                return Promise.resolve(c)
+            } catch (error) {
+
+                return Promise.reject(error)
+
+            }
+
+
+
+        },
+
 
 
 
