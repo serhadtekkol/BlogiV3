@@ -7,6 +7,7 @@ import './assets/faw/fontawesome/all.css'
 import 'firebase/database'
 import store from "./store"
 import firebaseConfig from './firebaseconf.js'
+import 'animate.css';
 
 // Import the functions you need from the SDKs you need
 

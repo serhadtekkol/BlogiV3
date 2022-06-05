@@ -84,19 +84,29 @@
         <h3 class="text-lg text-white px-1 py-3 font-sans font-semibold tracking-widest">
           Menu List
         </h3>
-        <button
-          @click="edit(index)"
+        <div
           :class="
             item.active ? 'border-l-4 border-green-500' : 'border-l-4 border-orange-500'
           "
           v-for="(item, index) in menulist"
-          class="mb-2 rounded-md bg-slate-300 px-2 py-2 w-full"
+          class="rounded-md my-3 bg-slate-300 hover:bg-slate-400 px-2 py-4 w-full"
         >
           <div class="w-full">
             <i :class="item.icon"></i> {{}}  {{ item.menutitle }}
-            <span class="float-right">{{ item.menuOrder }}</span>
+            <div class="float-right">
+              <span class="w-1/2 mx-4">#{{ item.menuOrder }}</span>
+              <span class="w-1/2 mx-4"
+                ><button @click="deleteAct(index, item.id)" class="hover:scale-150">
+                  <i class="far fa-trash"></i></button
+              ></span>
+              <span class="w-1/2 mx-4"
+                ><button @click="edit(index)" class="hover:scale-150">
+                  <i class="far fa-edit"></i>
+                </button>
+              </span>
+            </div>
           </div>
-        </button>
+        </div>
       </div>
     </div>
   </div>
@@ -108,13 +118,30 @@
       Please Wait While Components Loading <i class="far fa-spinner-third fa-spin"></i
     ></span>
   </div>
+
+  <app-alert
+    @alert="deleteReturn($event)"
+    v-if="messageboxShow.show"
+    :messageboxShow="messageboxShow"
+  ></app-alert>
 </template>
 <script>
 import { mapActions } from "vuex";
+import alertVue from "./alert.vue";
 export default {
+  components: {
+    appAlert: alertVue,
+  },
+
   data() {
     return {
+      messageboxShow: {
+        show: false,
+        id: null,
+        text: null,
+      },
       isloaded: false,
+      vart: "",
       isother: true,
       selectedCategory: "Other",
       tagList: [],
@@ -128,6 +155,7 @@ export default {
       },
     };
   },
+
   async created() {
     this.getTags();
     this.getMenu();
@@ -140,6 +168,18 @@ export default {
       getdetail: "adminstore/getDetail",
       getList: "adminstore/getList",
     }),
+
+    deleteAct(index, id) {
+      this.messageboxShow.show = true;
+
+      this.messageboxShow.id = id;
+      this.messageboxShow.text = this.menulist[index].menutitle;
+    },
+
+    deleteReturn(val) {
+      console.log("---" + val);
+      // this.messageboxShow.show = false;
+    },
 
     edit(index) {
       const a = this.tagList.length;
@@ -187,9 +227,11 @@ export default {
         for (let key in response) {
           this.menulist.push({ ...response[key], id: key });
         }
+
         this.menulist = this.menulist.sort(function (a, b) {
           return a.menuOrder - b.menuOrder;
         });
+
         this.isloaded = true;
       } catch (error) {}
     },
