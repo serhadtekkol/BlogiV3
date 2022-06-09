@@ -1,6 +1,6 @@
 import axios from "axios"
 import { v4 as uuidv4 } from 'uuid';
-import { getDatabase, ref, onValue, child, get, update, set, query, orderByChild, equalTo } from "firebase/database";
+import { getDatabase, ref, onValue, child, get, update, set, query, orderByChild, equalTo, remove } from "firebase/database";
 export const adminstore = {
     namespaced: true,
     state: {
@@ -17,7 +17,19 @@ export const adminstore = {
         async addnewtag({ commit, dispatch }, { payload }) {
 
             try {
-                await axios.post("/tags.json", { tagname: payload.tagname, tagdesc: payload.tagdesc })
+                // await axios.post("/tags.json", { tagname: payload.tagname, tagdesc: payload.tagdesc, tagFilterQueryName: payload.tagFilterQueryName })
+
+                const db = getDatabase();
+                set(ref(db, 'tags/' + uuidv4()), {
+                    tagname: payload.tagname,
+                    tagdesc: payload.tagdesc,
+                    tagFilterQueryName: payload.tagFilterQueryName,
+
+
+
+                });
+
+
                 return Promise.resolve("Success")
 
             } catch (error) {
@@ -27,20 +39,48 @@ export const adminstore = {
             }
 
         },
-        async getTags({ commit, dispatch }, ) {
+        // async getTags({ commit, dispatch }, ) {
 
-            try {
-                let response = await axios.get("/tags.json")
 
-                return Promise.resolve(response)
+        //     const url = "tags/";
 
-            } catch (error) {
+        //     try {
 
-                console.log(error)
-                return Promise.reject(error)
-            }
+        //         const dbRef = ref(getDatabase());
+        //         let c = get(child(dbRef, url)).then((snapshot) => {
+        //             if (snapshot.exists()) {
+        //                 console.log("sa")
+        //                 return snapshot.val();
 
-        },
+
+        //             } else {
+        //                 console.log("No data available");
+        //             }
+
+        //         }).catch((error) => {
+        //             console.error(error);
+        //         });
+        //         console.log(c);
+        //         return Promise.resolve(c)
+        //     } catch (error) {
+
+        //         return Promise.reject(error)
+
+        //     }
+
+
+        //     // try {
+        //     //     let response = await axios.get("/tags.json")
+
+        //     //     return Promise.resolve(response)
+
+        //     // } catch (error) {
+
+        //     //     console.log(error)
+        //     //     return Promise.reject(error)
+        //     // }
+
+        // },
 
 
         async updateGeneral({ commit, dispatch }, { table, id, payload }) {
@@ -78,10 +118,7 @@ export const adminstore = {
                     tagFilterQueryName: payload.tagFilterQueryName
                 }
 
-                // Get a key for a new Post.
 
-                // console.log(payload.tagid);
-                // Write the new post's data simultaneously in the posts list and the user's post list.
                 const updates = {};
 
                 updates['/tags/' + payload.tagid] = postData;
@@ -98,6 +135,33 @@ export const adminstore = {
 
 
         },
+
+        async deleteRecord({ commit, dispatch }, { payload }) {
+
+            try {
+                const db = getDatabase();
+                const t = '/' + payload.table + '/' + payload.id;
+
+
+                console.log(t);
+                // remove(ref(db), rar);
+                // const dbRef = ref(db, t);
+                const dbRef = ref(db, t);
+                remove(dbRef).then()
+
+                return Promise.resolve("Success")
+            } catch (error) {
+                console.log("hata");
+                return Promise.reject(error);
+
+            }
+
+
+
+
+        },
+
+
 
 
 

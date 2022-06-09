@@ -123,7 +123,7 @@ export default {
   },
   methods: {
     ...mapActions({
-      gettag: "adminstore/getTags",
+      getList: "adminstore/getList",
       getdetail: "adminstore/getDetail",
       updateAction: "adminstore/updateGeneral",
     }),
@@ -184,12 +184,14 @@ export default {
 
     async gettags() {
       this.tags = [];
+
+      this.inprogress = true;
       try {
-        let response = await this.gettag();
-        let data = response.data;
-        for (let key in data) {
-          this.tags.push({ ...data[key], id: key });
+        let response = await this.getList("tags");
+        for (let key in response) {
+          this.tags.push({ ...response[key], id: key });
         }
+        // console.log(response);
         this.isloaded = this.isloaded + 1;
       } catch (error) {
         console.log(error);

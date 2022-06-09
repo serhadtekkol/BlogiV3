@@ -56,7 +56,7 @@
       </div>
       <div :class="inprogress ? 'blur-sm' : ''">
         <div
-          v-for="(item, index) in tags"
+          v-for="(item, index) in tagList"
           class="bg-slate-300 basis-1/6 w-full p-3 rounded-md m-2 justify-between flex"
         >
           <span> {{ item.tagname }} <span></span></span>
@@ -75,7 +75,7 @@ export default {
     return {
       isnew: true,
       inprogress: false,
-      tags: [],
+      tagList: [],
       tag: {
         tagname: "",
         tagdesc: "",
@@ -95,16 +95,16 @@ export default {
   methods: {
     ...mapActions({
       newtag: "adminstore/addnewtag",
-      gettag: "adminstore/getTags",
+      getList: "adminstore/getList",
       updatetag: "adminstore/updateTags",
     }),
 
     async edit(index) {
-      this.tag.tagname = this.tags[index].tagname;
-      this.tag.tagdesc = this.tags[index].tagdesc;
-      this.tag.tagid = this.tags[index].id;
+      this.tag.tagname = this.tagList[index].tagname;
+      this.tag.tagdesc = this.tagList[index].tagdesc;
+      this.tag.tagid = this.tagList[index].id;
       //todo hey
-      this.tag.tagFilterQueryName = this.tags[index].tagFilterQueryName;
+      this.tag.tagFilterQueryName = this.tagList[index].tagFilterQueryName;
       this.isnew = false;
     },
 
@@ -129,6 +129,7 @@ export default {
           this.messageObject.error = false;
           this.messageObject.show = true;
           this.messageObject.message = "Tags successfully updated";
+
           this.gettags();
         } catch (error) {
           this.messageObject.error = true;
@@ -139,17 +140,16 @@ export default {
     },
 
     async gettags() {
-      this.tags = [];
+      this.tagList = [];
       this.inprogress = true;
       try {
-        let response = await this.gettag();
-        let data = response.data;
-        for (let key in data) {
-          this.tags.push({ ...data[key], id: key });
+        let response = await this.getList("tags");
+        for (let key in response) {
+          this.tagList.push({ ...response[key], id: key });
         }
-        console.log(this.tags);
+        // console.log(response);
       } catch (error) {
-        // console.log(error);
+        console.log(error);
       }
       this.inprogress = false;
     },

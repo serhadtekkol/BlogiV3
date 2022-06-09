@@ -20,7 +20,7 @@
           />
           <ul class="text-gray-300 text-sm my-2">
             <li
-              v-for="item in tags"
+              v-for="item in tagList"
               @click="selectCategory(item.tagname)"
               :class="post.tag == item.tagname ? 'tagselected' : 'tagsnotselected'"
               class="inline px-2 py-0.5 mb-2 m-1 rounded-lg uppercase text-xs"
@@ -101,7 +101,7 @@ export default {
 
       content: "",
       selectedCategory: "",
-      tags: [],
+      tagList: [],
       tag: {
         tagname: "",
         tagdesc: "",
@@ -117,7 +117,7 @@ export default {
   methods: {
     ...mapActions({
       newtag: "adminstore/addnewtag",
-      gettag: "adminstore/getTags",
+      getList: "adminstore/getList",
       getdetail: "adminstore/getDetail",
       createpost: "adminstore/createPost",
     }),
@@ -145,19 +145,20 @@ export default {
     },
 
     async gettags() {
-      this.tags = [];
+      this.tagList = [];
+      this.inprogress = true;
       try {
-        let response = await this.gettag();
-        let data = response.data;
-        for (let key in data) {
-          this.tags.push({ ...data[key], id: key });
+        let response = await this.getList("tags");
+        for (let key in response) {
+          this.tagList.push({ ...response[key], id: key });
         }
-        this.isloaded = true;
+        this.isloaded = this.isloaded + 1;
+        // console.log(response);
       } catch (error) {
         console.log(error);
       }
+      this.inprogress = false;
     },
-
     yasyasgleyy() {
       tinymce.remove();
       tinymce.init({

@@ -167,6 +167,7 @@ export default {
 
       getdetail: "adminstore/getDetail",
       getList: "adminstore/getList",
+      deleteRecord: "adminstore/deleteRecord",
     }),
 
     deleteAct(index, id) {
@@ -176,9 +177,16 @@ export default {
       this.messageboxShow.text = this.menulist[index].menutitle;
     },
 
-    deleteReturn(val) {
-      console.log("---" + val);
-      // this.messageboxShow.show = false;
+    async deleteReturn(val) {
+      this.messageboxShow.show = false;
+      let payload = { table: "menu", id: val };
+      try {
+        await this.deleteRecord({ payload: payload });
+        this.menulist = [];
+        this.getMenu();
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     edit(index) {
