@@ -1,5 +1,23 @@
 {
   "projects": {
     "default": "blogi-448bc"
+  },
+  "targets": {
+    "blogi-448bc": {
+      "hosting": {
+        "app": [
+          "serhadtekkol.web.app"
+        ],
+        "serhadtekkol": [
+          "serhadtekkol"
+        ]
+      },
+      "storage": {
+        "main": [
+          "blogi-448bc.web.app",
+          "serhadtekkol.web.app"
+        ]
+      }
+    }
   }
 }
