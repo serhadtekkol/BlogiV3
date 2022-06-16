@@ -2,37 +2,25 @@
     "database": {
         "rules": "database.rules.json"
     },
-    "hosting": [
-
-        {
-            "target": "serhadtekkol",
-
-            "public": "dist",
-            "ignore": [
-                "firebase.json",
-                "**/.*",
-                "**/node_modules/**"
-            ],
-            "rewrites": [{
-                "source": "**",
-                "destination": "/index.html"
-            }]
-        },
-        {
+    "hosting": [{
             "target": "blogi",
-
             "public": "dist",
             "ignore": [
                 "firebase.json",
                 "**/.*",
                 "**/node_modules/**"
-            ],
-            "rewrites": [{
-                "source": "**",
-                "destination": "/index.html"
-            }]
-        }
+            ]
+        },
 
+        {
+            "target": "serhad",
+            "public": "dist",
+            "ignore": [
+                "firebase.json",
+                "**/.*",
+                "**/node_modules/**"
+            ]
+        }
 
 
     ]

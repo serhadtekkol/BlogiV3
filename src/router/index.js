@@ -3,6 +3,8 @@ import HomeView from '../views/HomePostView.vue'
 import webadminVue from '../views/webadmin.vue'
 import loginViewVue from '../views/loginView.vue'
 import newHome from '../views/newHome.vue'
+import postDetailVue from '../views/postDetail.vue'
+
 
 import store from '../store'
 
@@ -18,12 +20,21 @@ const router = createRouter({
             component: newHome,
 
         },
+        // {
+        //     path: '/:compo',
+        //     name: 'messageme',
+        //     component: HomeView
+
+        // },
+
         {
-            path: '/:compo',
-            name: 'messageme',
-            component: HomeView
+            path: '/detail/:id',
+            name: 'detailpost',
+            component: postDetailVue,
+
 
         },
+
         {
             path: '/categories/:category',
             name: 'category',
