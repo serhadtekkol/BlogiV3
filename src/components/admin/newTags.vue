@@ -1,28 +1,14 @@
 <template>
-  <div class="container mx-auto text-sm pb-10 pt-10">
-    <div class="p-6 bg-gray-600 rounded-md mb-2">
-      <h3 class="text-lg text-white px-1 py-3 font-sans font-semibold tracking-widest">
-        New Tags
-      </h3>
+  <div class="container mx-auto text-sm text-gray-600 pb-10 pt-10">
+    <div class="p-6 bg-white rounded-md mb-2 shadow-md">
+      <h3 class="text-lg px-1 py-3 font-sans font-semibold tracking-widest">New Tags</h3>
 
-      <label class="text-white">Tag Name</label><br />
-      <input
-        type="text"
-        v-model="tag.tagname"
-        class="bg-white text-gray-700 rounded-sm outline-none px-3 py-1 w-full mb-3"
-      />
-      <label class="text-white">Tag Description</label><br />
-      <input
-        type="text"
-        v-model="tag.tagdesc"
-        class="bg-white text-gray-700 rounded-sm outline-none px-3 py-1 w-full mb-3"
-      />
-      <label class="text-white">Tag Filter Query Name</label><br />
-      <input
-        type="text"
-        v-model="tag.tagFilterQueryName"
-        class="bg-white text-gray-700 rounded-sm outline-none px-3 py-1 w-full mb-3"
-      />
+      <label class="">Tag Name</label><br />
+      <input type="text" v-model="tag.tagname" class="inputs" />
+      <label class="">Tag Description</label><br />
+      <input type="text" v-model="tag.tagdesc" class="inputs" />
+      <label class="">Tag Filter Query Name</label><br />
+      <input type="text" v-model="tag.tagFilterQueryName" class="inputs" />
 
       <button @click="addnewtag" class="btn-scs">{{ !isnew ? "Update" : "Save" }}</button>
       <button v-if="!isnew" @click="isnew = true" class="btn-dng">Cancel</button>
@@ -43,10 +29,8 @@
       </div>
     </div>
 
-    <div class="p-6 bg-gray-600 rounded-md mt-8">
-      <h3 class="text-lg text-white px-1 py-3 font-sans font-semibold tracking-widest">
-        Tag List
-      </h3>
+    <div class="p-6 bg-white rounded-md mb-2 shadow-md text-gray-600 mt-8">
+      <h3 class="text-lg px-1 py-3 font-sans font-semibold tracking-widest">Tag List</h3>
 
       <div
         v-if="inprogress"
@@ -57,7 +41,7 @@
       <div :class="inprogress ? 'blur-sm' : ''">
         <div
           v-for="(item, index) in tagList"
-          class="bg-slate-300 basis-1/6 w-full p-3 rounded-md m-2 justify-between flex"
+          class="border border-slate-300/80 hover:bg-slate-100 basis-1/6 w-full p-2 rounded-md m-2 justify-between flex"
         >
           <span> {{ item.tagname }} <span></span></span>
           <div>

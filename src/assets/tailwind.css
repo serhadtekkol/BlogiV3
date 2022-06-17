@@ -2,11 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 .tagsnotselected {
-    @apply bg-gray-500
+    @apply bg-white border border-transparent
 }
 
 .tagsnotselected:hover {
-    @apply bg-gray-400
+    @apply border-gray-500/60 text-gray-600
 }
 
 .tagselected {
@@ -38,11 +38,15 @@
 }
 
 .activeroutebutton {
-    @apply bg-gradient-to-r from-pink-600 to-purple-600 text-white px-3 py-1.5 rounded-md shadow-md
+    @apply bg-sky-400 rounded-md shadow-md bg-gradient-to-r from-purple-600 to-pink-600
 }
 
 .routebutton {
-    @apply text-white px-3 py-1.5
+    @apply text-white px-3 py-2 flex items-center
+}
+
+.routebutton:hover {
+    @apply text-white px-3 py-2 flex items-center bg-sky-400 rounded-md shadow-md
 }
 
 .navtop {
@@ -63,4 +67,28 @@ input {
 
 .popins-font {
     font-family: 'Poppins', sans-serif;
+}
+
+.navitems>li {
+    @apply my-1 py-1
+}
+
+.inputs {
+    @apply bg-white text-gray-700 border border-gray-300 mt-2 shadow-sm rounded-md outline-none px-3 py-1.5 w-full mb-3
+}
+
+.inputs:focus {
+    @apply border-gray-400
+}
+
+.inputs-w-icon {
+    @apply bg-white text-gray-700 border border-gray-300 mt-2 shadow-sm rounded-md outline-none pr-3 py-1.5 w-full mb-3
+}
+
+.inputs-w-icon:focus {
+    @apply border-gray-400
+}
+
+.z-100 {
+    z-index: 100
 }

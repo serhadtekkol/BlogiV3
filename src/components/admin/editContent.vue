@@ -1,23 +1,13 @@
 <template>
   <div class="container mx-auto text-sm pb-10 pt-10">
-    <div class="p-6 bg-gray-600 rounded-md">
-      <h3 class="text-lg text-white px-1 py-3 font-sans font-semibold tracking-widest">
-        Edit Post
-      </h3>
+    <div class="p-6 bg-white shadow-md rounded-md">
+      <h3 class="text-lg px-1 py-3 font-sans font-semibold tracking-widest">Edit Post</h3>
       <div class="md:flex">
         <div class="w-full px-3">
-          <label class="text-white">Title</label><br />
-          <input
-            type="text"
-            v-model="post.title"
-            class="bg-white text-gray-700 rounded-sm outline-none px-3 py-1 w-full mb-3"
-          />
-          <label class="text-white">Thumbnail URL</label><br />
-          <input
-            type="text"
-            v-model="post.thumbnail"
-            class="bg-white text-gray-700 rounded-sm outline-none px-3 py-1 w-full mb-3"
-          />
+          <label class="">Title</label><br />
+          <input type="text" v-model="post.title" class="inputs" />
+          <label class="">Thumbnail URL</label><br />
+          <input type="text" v-model="post.thumbnail" class="inputs" />
           <ul class="text-gray-300 text-sm my-2">
             <li
               v-for="item in tags"
@@ -28,12 +18,8 @@
               {{ item.tagname }}
             </li>
           </ul>
-          <label class="text-white">Summary</label><br />
-          <textarea
-            type="text"
-            v-model="post.summary"
-            class="bg-white text-gray-700 rounded-sm outline-none px-3 py-1 w-full mb-3"
-          />
+          <label class="">Summary</label><br />
+          <textarea type="text" v-model="post.summary" class="inputs" />
 
           <label class="text-white">Content</label><br />
           <textarea v-model="post.content" id="myTextarea"></textarea>

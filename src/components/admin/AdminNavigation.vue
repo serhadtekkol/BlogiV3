@@ -1,73 +1,104 @@
 <template>
-  <div
-    class="bg-gray-500/30 backdrop-blur-md navtop border-b-2 px-10 border-b-pink-500 items-center container rounded-xl text-sm shadow-lg fixed top-0 right-0 left-0 mx-auto justify-between flex"
-  >
-    <div class="mt-1.5 mx-auto">
-      <ul class="py-3 flex">
-        <li class="inline px-2 text-gray-200">
+  <nav class="bg-sky-500 px-6 text-sm min-h-screen">
+    <div class="relative min-h-screen">
+      <ul class="py-3 text-gray-200 navitems text-center">
+        <li class="px-2 py-2 popins-font tracking-widest hidden md:inline-block">
+          Blogi Dashboard
+        </li>
+
+        <li>
           <router-link
             to="/master/dashboard"
-            class="routebutton"
+            class="routebutton relative"
             active-class="activeroutebutton"
           >
-            <i class="far fa-home"></i>
-            <span class="hidden md:inline-block pl-2"> Dashboard</span>
+            <i class="far fa-home md:text-base text-2xl"></i>
+            <span class="pl-2 absolute hidden md:inline-block left-8"> Dashboard</span>
           </router-link>
         </li>
-        <li class="inline px-2 text-gray-200">
+
+        <li>
           <router-link
             to="/master/newpost"
-            class="routebutton"
+            class="routebutton relative text-center"
             active-class="activeroutebutton"
           >
-            <i class="far fa-file-plus"></i>
-            <span class="hidden md:inline-block pl-2"> New Post</span></router-link
+            <i class="far fa-file-plus md:text-base pl-1 md:pl-0 text-2xl"></i>
+            <span class="pl-2 absolute left-8 hidden md:inline-block">
+              New Post</span
+            ></router-link
           >
         </li>
-        <li class="inline px-2 text-gray-200">
+        <li>
           <router-link
             to="/master/posts"
-            class="routebutton"
+            class="routebutton relative"
             active-class="activeroutebutton"
           >
-            <i class="far fa-list-alt"></i>
-            <span class="hidden md:inline-block pl-2"> Posts</span></router-link
+            <i class="far fa-list-alt md:text-base text-2xl"></i>
+            <span class="pl-2 absolute left-8 hidden md:inline-block">
+              Posts</span
+            ></router-link
           >
         </li>
-        <li class="inline px-2 text-gray-200">
+        <!-- <li>
           <router-link
             to="/master/editmenu"
-            class="routebutton"
+            class="routebutton w-full"
             active-class="activeroutebutton"
           >
             <i class="far fa-list-alt"></i>
-            <span class="hidden md:inline-block pl-2"> Edit Menus</span></router-link
+            <span class="pl-2"> Edit Menus</span></router-link
           >
-        </li>
-        <li class="inline px-2 text-gray-200">
+        </li> -->
+        <li>
           <router-link
             to="/master/newtag"
-            class="routebutton"
+            class="routebutton relative"
             active-class="activeroutebutton"
           >
-            <i class="far fa-badge-check"></i>
-            <span class="hidden md:inline-block pl-2"> New Tag</span></router-link
+            <i class="far fa-badge-check md:text-base text-2xl"></i>
+            <span class="pl-2 absolute left-8 hidden md:inline-block">
+              New Tag</span
+            ></router-link
+          >
+        </li>
+
+        <li>
+          <a
+            href="https://serhadtekkol.web.app"
+            target="_blank"
+            class="routebutton relative"
+          >
+            <i class="far fa-square-arrow-up-right md:text-base text-2xl"></i>
+            <span class="pl-2 absolute left-8 hidden md:inline-block">
+              Open Page
+            </span></a
+          >
+        </li>
+        <li>
+          <router-link
+            to="/master/settings"
+            class="routebutton relative"
+            active-class="activeroutebutton"
+          >
+            <i class="far fa-gears md:text-base text-center text-2xl"></i>
+            <span class="pl-2 absolute left-8 hidden md:inline-block">
+              Settings</span
+            ></router-link
           >
         </li>
       </ul>
-    </div>
-    <div>
-      <div class="py-3">
-        <button
-          @click="logout"
-          class="border border-gray-300 text-gray-300 px-3 py-1 text-sm rounded-md hover:bg-purple-600 hover:text-white"
-        >
-          <span class="hidden md:inline-block pl-2 mr-1">{{ username }}</span>
-          <i class="fas fa-power-off"></i>
-        </button>
+      <div class="absolute inset-x-0 bottom-0 py-3">
+        <div class="border border-transparent hover:border-white rounded-md">
+          <button @click="logout" class="text-white px-3 py-1 text-sm w-full relative">
+            <i class="fas fa-power-off"></i>
+            <span class="pl-2 left-8 hidden md:inline-block">{{ username }}</span>
+          </button>
+        </div>
       </div>
     </div>
-  </div>
+  </nav>
 </template>
 <script>
 import { authstore } from "../../store/adminstore/auth";

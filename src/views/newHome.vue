@@ -132,12 +132,12 @@
       <div class="grid place-items-center h-screen">
         <div class="container w-full text-center md:w-1/3">
           <span class="text-white poppins-font text-4xl md:text-6xl font-semibold">
-            Contacts</span
+            Platforms</span
           >
           <br />
-          <div class="grid grid-cols-3 gap-4 place-items-center mt-10">
+          <div class="grid grid-cols-4 gap-4 place-items-center mt-10">
             <div class="relative">
-              <a class="sociallink px-4 py-8" href="http://www.twitter.com/serhadtekkol">
+              <a class="sociallink px-4 py-8" :href="social.twitter">
                 <i class="fa-brands fa-twitter text-white text-4xl"></i>
               </a>
               <div
@@ -147,10 +147,7 @@
               </div>
             </div>
             <div class="relative">
-              <a
-                class="sociallink px-4 py-8"
-                href="https://www.linkedin.com/in/serhadbahadirtekkol/"
-              >
+              <a class="sociallink px-4 py-8" :href="social.linkedin">
                 <i class="fa-brands fa-linkedin text-white text-4xl"></i>
               </a>
               <div
@@ -161,13 +158,23 @@
             </div>
 
             <div class="relative">
-              <a class="sociallink px-4 py-8" href="https://github.com/serhadtekkol">
+              <a class="sociallink px-4 py-8" :href="social.github">
                 <i class="fa-brands fa-github text-white text-4xl"></i>
               </a>
               <div
                 class="hidden noti px-2 py-1.5 rounded-md mt-2 bg-white shadow-md shadow-gray-600 text-gray-700 text-sm"
               >
                 Github
+              </div>
+            </div>
+            <div class="relative">
+              <a class="sociallink px-4 py-8" :href="social.codepen">
+                <i class="fa-brands fa-codepen text-white text-4xl"></i>
+              </a>
+              <div
+                class="hidden noti px-2 py-1.5 rounded-md mt-2 bg-white shadow-md shadow-gray-600 text-gray-700 text-sm"
+              >
+                CodePen
               </div>
             </div>
           </div>
@@ -183,22 +190,30 @@ export default {
     return {
       csharp: [],
       threeDmodels: [],
+      social: {
+        isnew: false,
+        twitter: "",
+        linkedin: "",
+        github: "",
+        codepen: "",
+        mail: "",
+      },
     };
   },
-  created() {
+  async created() {
     console.clear();
     console.log("Created with " + "%c❤" + "%c by Serhad", "color:red;", "color:black;");
     console.log("linkedin: serhadbahadirtekkol");
     console.log("twitter: serhadtekkol");
-  },
-  async created() {
     this.getcsharp();
     this.get3dmodels();
+    this.getsocial();
   },
 
   methods: {
     ...mapActions({
       postList: "indexPageStore/getPostList",
+      getsocialaccounts: "adminstore/getSocial",
     }),
 
     async getcsharp() {
@@ -219,7 +234,6 @@ export default {
         let response = await this.postList("3D Models");
         for (let key in response) {
           if (!response[key].isdraft) {
-            console.log(response[key]);
             this.threeDmodels.push({ ...response[key], id: key });
           }
         }
@@ -228,7 +242,13 @@ export default {
         console.log(error);
       }
     },
+    async getsocial() {
+      try {
+        const a = await this.getsocialaccounts();
 
+        this.social = a;
+      } catch (error) {}
+    },
     camelCase(name) {
       let c = name.split(" ");
       let newName = "";
@@ -237,7 +257,6 @@ export default {
           newName = c[0].toLowerCase();
         } else {
           let newWord = c[index].toLowerCase();
-          console.log(newWord);
 
           newName += newWord.charAt(0).toUpperCase() + newWord.slice(1);
         }

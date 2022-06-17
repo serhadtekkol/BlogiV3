@@ -1,23 +1,13 @@
 <template>
-  <div class="container mx-auto text-sm pb-10 pt-10">
-    <div class="p-6 bg-gray-600 rounded-md">
-      <h3 class="text-lg text-white px-1 py-3 font-sans font-semibold tracking-widest">
-        New Post
-      </h3>
+  <div class="container mx-auto text-sm text-gray-600 pb-10 pt-10">
+    <div class="p-6 bg-white rounded-md mb-2 shadow-md">
+      <h3 class="text-lg px-1 py-3 font-sans font-semibold tracking-widest">New Post</h3>
       <div class="md:flex">
         <div class="w-full px-3">
-          <label class="text-white">Title</label><br />
-          <input
-            type="text"
-            v-model="post.title"
-            class="bg-white text-gray-700 rounded-sm outline-none px-3 py-1 w-full mb-3"
-          />
-          <label class="text-white">Thumbnail URL</label><br />
-          <input
-            type="text"
-            v-model="post.thumbnail"
-            class="bg-white text-gray-700 rounded-sm outline-none px-3 py-1 w-full mb-3"
-          />
+          <label class="">Title</label><br />
+          <input type="text" v-model="post.title" class="inputs" />
+          <label class="">Thumbnail URL</label><br />
+          <input type="text" v-model="post.thumbnail" class="inputs" />
           <ul class="text-gray-300 text-sm my-2">
             <li
               v-for="item in tagList"
@@ -28,12 +18,8 @@
               {{ item.tagname }}
             </li>
           </ul>
-          <label class="text-white">Summary</label><br />
-          <textarea
-            type="text"
-            v-model="post.summary"
-            class="bg-white text-gray-700 rounded-sm outline-none px-3 py-1 w-full mb-3"
-          />
+          <label class="">Summary</label><br />
+          <textarea type="text" v-model="post.summary" class="inputs" />
 
           <label class="text-white">Content</label><br />
           <textarea v-model="post.content" id="myTextarea"></textarea>
@@ -61,7 +47,7 @@
 
   <div
     :class="isloaded ? 'hidden' : ''"
-    class="z-50 grid place-items-center fixed top-0 w-screen h-screen bg-slate-600/40 backdrop-blur-sm mx-auto text-center"
+    class="grid place-items-center fixed top-0 left-0 w-screen h-screen bg-slate-600/40 backdrop-blur-sm mx-auto text-center z-100"
   >
     <span class="text-white text-xl">
       Please Wait While Components Loading <i class="far fa-spinner-third fa-spin"></i

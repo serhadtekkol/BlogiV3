@@ -14,6 +14,184 @@ export const adminstore = {
 
     },
     actions: {
+
+        async setAnnouncement({ commit, dispatch }, { payload }) {
+            let message = { message: "", error: false }
+            try {
+                const db = getDatabase();
+                console.log(payload)
+                if (payload.isnew) {
+
+
+
+
+                    set(ref(db, 'announcement/' + uuidv4()), {
+                        description: payload.description,
+
+                        createddate: Date.now(),
+                        updateddate: Date.now(),
+
+
+
+                    });
+                    message.message = "Announcement created!",
+                        message.show = true,
+                        message.error = false
+                    return message;
+                } else {
+                    const updates = {};
+
+
+                    updates['/announcement/' + payload.id] = payload;
+
+                    update(ref(db), updates);
+                    message.message = "Announcement  updated!",
+                        message.show = true,
+                        message.error = false
+                    return message;
+
+                }
+
+            } catch (error) {
+
+                message.message = "An error accoured " + error,
+                    message.show = true,
+                    message.error = true
+                return message;
+            }
+
+
+
+        },
+
+        async deleteAnnouncement({ commit, dispatch }, { payload }) {
+
+            try {
+
+                const db = getDatabase();
+                const t = '/announcement/' + payload.id;
+
+
+
+                // remove(ref(db), rar);
+                // const dbRef = ref(db, t);
+                const dbRef = ref(db, t);
+                remove(dbRef).then()
+
+                return Promise.resolve("Success")
+            } catch (error) {
+                console.log("hata");
+                return Promise.reject(error);
+
+            }
+
+
+        },
+
+
+
+        async getAnnouncement({ commit, dispatch }) {
+
+            const url = "announcement/";
+
+            try {
+
+                const dbRef = ref(getDatabase());
+                var c = get(child(dbRef, url)).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        return snapshot.val();
+
+                    } else {
+                        console.log("No data available");
+                    }
+
+                }).catch((error) => {
+                    console.error(error);
+                });
+                return Promise.resolve(c)
+            } catch (error) {
+
+                return Promise.reject(error)
+
+            }
+
+        },
+
+        async getSocial({ commit, dispatch }) {
+
+            const url = "settings/social";
+
+            try {
+
+                const dbRef = ref(getDatabase());
+                var c = get(child(dbRef, url)).then((snapshot) => {
+                    if (snapshot.exists()) {
+                        return snapshot.val();
+
+                    } else {
+                        console.log("No data available");
+                    }
+
+                }).catch((error) => {
+                    console.error(error);
+                });
+                return Promise.resolve(c)
+            } catch (error) {
+
+                return Promise.reject(error)
+
+            }
+
+        },
+
+
+        async setSocial({ commit, dispatch }, { payload }) {
+            let message = { message: "", error: false }
+            try {
+                const db = getDatabase();
+
+                if (payload.isnew) {
+
+
+
+
+                    set(ref(db, 'settings/' + 'social'), {
+                        twitter: payload.twitter,
+                        linkedin: payload.linkedin,
+                        github: payload.github,
+                        mail: payload.mail,
+
+
+                    });
+                    message.message = "Social accounts saved to database!",
+                        message.show = true,
+                        message.error = false
+                    return message;
+                } else {
+                    const updates = {};
+
+
+                    updates['/settings/social'] = payload;
+
+                    update(ref(db), updates);
+                    message.message = "Social accounts updated!",
+                        message.show = true,
+                        message.error = false
+                    return message;
+
+                }
+
+            } catch (error) {
+
+                message.message = "An error accoured " + error,
+                    message.show = true,
+                    message.error = true
+                return message;
+            }
+
+
+        },
+
         async addnewtag({ commit, dispatch }, { payload }) {
 
             try {

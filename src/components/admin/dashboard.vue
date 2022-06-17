@@ -1,5 +1,5 @@
 <template>
-  <div class="container mx-auto text-sm pb-10 pt-10">
+  <div class="text-sm pb-10 pt-10">
     <div class="p-6 bg-gray-600 rounded-md">
       <h3 class="text-lg text-white px-1 py-3 font-sans font-semibold tracking-widest">
         Hi! {{ username }}
