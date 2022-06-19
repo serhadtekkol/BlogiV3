@@ -8,6 +8,8 @@ import 'firebase/database'
 import store from "./store"
 import firebaseConfig from './firebaseconf.js'
 import 'animate.css';
+import Vue3Marquee from 'vue3-marquee'
+import 'vue3-marquee/dist/style.css'
 
 // Import the functions you need from the SDKs you need
 
@@ -27,7 +29,7 @@ const auth = getAuth();
 axios.defaults.baseURL = "https://blogi-448bc-default-rtdb.europe-west1.firebasedatabase.app/";
 // Initialize Firebase
 
-const app = createApp(App).use(store).use(router).mount("#app");
+const app = createApp(App).use(Vue3Marquee).use(store).use(router).mount("#app");
 
 
 // app.use(router)

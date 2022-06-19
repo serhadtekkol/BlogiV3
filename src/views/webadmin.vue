@@ -1,15 +1,11 @@
 <template>
   <div class="w-screen min-h-screen font-sans text-gray-900 bg-gray-50 flex">
-    <div v-if="menushow" :class="menushow ? '' : ''" class="md:w-60">
-      <adminNavApp></adminNavApp>
-    </div>
+    <adminNavApp></adminNavApp>
 
     <div class="flex-1 min-w-0">
       <div class="w-full shadow-md px-6 py-4 flex">
-        <button @click="menushow = !menushow" class="">
-          <i class="far fa-list-dots"></i>
-        </button>
-        <div>blogi</div>
+        <button @click="menushow = !menushow" class=""></button>
+        <div>Blogi V3</div>
       </div>
 
       <div class="px-4">

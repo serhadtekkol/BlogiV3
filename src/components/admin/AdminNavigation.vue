@@ -1,10 +1,16 @@
 <template>
-  <nav class="bg-sky-500 px-6 text-sm min-h-screen">
+  <nav
+    id="navmenu"
+    v-if="menushow"
+    :class="menushow ? 'fixed w-60' : ' sm:relative hidden sm:inline-block'"
+    class="bg-sky-500 px-6 text-sm min-h-screen z-max hidden sm:relative sm:inline-block"
+  >
     <div class="relative min-h-screen">
       <ul class="py-3 text-gray-200 navitems text-center">
-        <li class="px-2 py-2 popins-font tracking-widest hidden md:inline-block">
-          Blogi Dashboard
+        <li @click="showonmobilemenu()" class="sm:hidden relative right-0">
+          Close Menu <i class="far fa-times-circle font-bold"></i>
         </li>
+        <li class="px-2 py-2 sm:mt-8 popins-font tracking-widest">Blogi Dashboard</li>
 
         <li>
           <router-link
@@ -12,8 +18,8 @@
             class="routebutton relative"
             active-class="activeroutebutton"
           >
-            <i class="far fa-home md:text-base text-2xl"></i>
-            <span class="pl-2 absolute hidden md:inline-block left-8"> Dashboard</span>
+            <i class="far fa-home"></i>
+            <span class="pl-2 absolute left-8"> Dashboard</span>
           </router-link>
         </li>
 
@@ -23,10 +29,8 @@
             class="routebutton relative text-center"
             active-class="activeroutebutton"
           >
-            <i class="far fa-file-plus md:text-base pl-1 md:pl-0 text-2xl"></i>
-            <span class="pl-2 absolute left-8 hidden md:inline-block">
-              New Post</span
-            ></router-link
+            <i class="far fa-file-plus pl-1 md:pl-0"></i>
+            <span class="pl-2 absolute left-8"> New Post</span></router-link
           >
         </li>
         <li>
@@ -35,10 +39,8 @@
             class="routebutton relative"
             active-class="activeroutebutton"
           >
-            <i class="far fa-list-alt md:text-base text-2xl"></i>
-            <span class="pl-2 absolute left-8 hidden md:inline-block">
-              Posts</span
-            ></router-link
+            <i class="far fa-list-alt"></i>
+            <span class="pl-2 absolute left-8"> Posts</span></router-link
           >
         </li>
         <!-- <li>
@@ -57,10 +59,8 @@
             class="routebutton relative"
             active-class="activeroutebutton"
           >
-            <i class="far fa-badge-check md:text-base text-2xl"></i>
-            <span class="pl-2 absolute left-8 hidden md:inline-block">
-              New Tag</span
-            ></router-link
+            <i class="far fa-badge-check"></i>
+            <span class="pl-2 absolute left-8"> New Tag</span></router-link
           >
         </li>
 
@@ -70,10 +70,14 @@
             target="_blank"
             class="routebutton relative"
           >
-            <i class="far fa-square-arrow-up-right md:text-base text-2xl"></i>
-            <span class="pl-2 absolute left-8 hidden md:inline-block">
-              Open Page
-            </span></a
+            <i class="far fa-globe-stand"></i>
+            <span class="pl-2 absolute left-8"> Open Page Live </span></a
+          >
+        </li>
+        <li>
+          <a href="http://localhost:3000" target="_blank" class="routebutton relative">
+            <i class="far fa-arrows-to-circle"></i>
+            <span class="pl-2 absolute left-8"> Open Page Local </span></a
           >
         </li>
         <li>
@@ -82,10 +86,8 @@
             class="routebutton relative"
             active-class="activeroutebutton"
           >
-            <i class="far fa-gears md:text-base text-center text-2xl"></i>
-            <span class="pl-2 absolute left-8 hidden md:inline-block">
-              Settings</span
-            ></router-link
+            <i class="far fa-gears text-center"></i>
+            <span class="pl-2 absolute left-8"> Settings</span></router-link
           >
         </li>
       </ul>
@@ -99,6 +101,16 @@
       </div>
     </div>
   </nav>
+
+  <button
+    v-if="menubarshow"
+    @click="showonmobilemenu()"
+    class="fixed left-0 top-16 sm:hidden"
+  >
+    <span class="rounded-r-3xl pl-3 pr-4 py-3 bg-sky-500 shadow-lg"
+      ><i class="far fa-list text-white"></i
+    ></span>
+  </button>
 </template>
 <script>
 import { authstore } from "../../store/adminstore/auth";
@@ -108,6 +120,8 @@ export default {
   data() {
     return {
       username: "authstore.state.user.email",
+      menushow: true,
+      menubarshow: true,
     };
   },
   methods: {
@@ -118,9 +132,31 @@ export default {
       await this.logoutFunc();
       router.push("/login");
     },
+    showonmobilemenu() {
+      // if (this.menushow) {
+      //   document.getElementById("navmenu").classListToggle("hidden");
+      //   console.log(this.menushow);
+      // } else {
+      //   console.log(this.menushow);
+
+      //   document.getElementById("navmenu").classList.add("hidden");
+      // }
+      // this.menushow = !this.menushow;
+
+      var t = document.getElementById("navmenu");
+
+      document.getElementById("navmenu").classList.toggle("hidden");
+      this.menubarshow = !this.menubarshow;
+    },
   },
   created() {
     this.username = localStorage.getItem("username");
   },
 };
 </script>
+
+<style scoped>
+.z-max {
+  z-index: 99999999999999;
+}
+</style>
