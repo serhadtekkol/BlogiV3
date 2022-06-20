@@ -87,11 +87,9 @@ export default {
     }),
 
     async changePostStatus(index, id, status) {
-      // console.log(index);
-      // console.log(id);
-      // console.log(status);
+   
       this.posts[index].isdraft = status;
-      // console.log(this.posts[index]);
+
       this.post.isdraft = status;
       await this.updateAction({
         table: "posts",
