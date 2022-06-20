@@ -1,45 +1,35 @@
 <template>
   <!-- <div class="bg-gradient-to-t from-purple-700 to-blue-700 px-4"> -->
   <div class="mx-auto container sm:w-3/4 sm:border-x sm:border-gray-300">
-    <div>menu</div>
+    <div>menu component will be in here</div>
 
     <div class="min-h-screen popins-font">
       <div class="">
         <div class="">
           <img
             class="object-cover sm:h-52 h-72 w-full shadow-lg grayscale"
-            src="https://images.pexels.com/photos/3269269/pexels-photo-3269269.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1"
+            :src="postdetail.thumbnail"
           />
         </div>
         <div class="py-6 relative w-3/5 -mt-14">
           <h2
             class="text-2xl px-4 py-4 uppercase text-white bg-purple-500 fw-400 tracking-tighter shadow-lg shadow-gray-400 rounded-r-md"
           >
-            How to use session on asp.net
+            {{ postdetail.title }}
           </h2>
-          <!-- 
-            <div class="text-sm float-right">
-              <div class="px-4 text-white">Posted: 16.06.2022 Updated: 17.06.2022</div>
-            </div> -->
         </div>
         <div class="">
           <div class="w-full mt-3 bg-white rounded-lg px-10 py-6">
-            <div class="content mt-3 text-sm text-justify fw-300">
-              Our goal is to move (1,1) and make it at (0,1) which isn’t technically
-              possible. So we will try to fake it. We previously said that our range is [0
-              1] (or [0% 100%]) so let’s imagine the case when 0% is very close to 100%.
-              If, for example, we want to animate top from 20px (0%) to 20.1px (100%) then
-              we can say that both the initial and final states are equal. Hm, but our
-              element will not move at all, right? Well, it will move a little because the
-              Y value exceeds 20.1px (100%). But that’s not enough to give us perceptible
-              movement:
-            </div>
+            <div
+              v-html="postdetail.content"
+              class="content mt-3 text-sm text-justify fw-300"
+            ></div>
 
             <div class="w-full border-t border-gray-300 mt-4 flex py-4">
               <div
                 class="border mx-2 shadow px-4 py-1.5 bg-gray-100 text-gray-600 rounded-md w-fit text-xs"
               >
-                Author : Serhad
+                Author : {{ postdetail.author }}
               </div>
               <div
                 class="border shadow mx-2 px-4 py-1.5 bg-gray-100 text-gray-600 rounded-md w-fit text-xs"
@@ -78,19 +68,179 @@
       </span>
     </Vue3Marquee>
   </div>
+
+  <div
+    id="loadinganim"
+    :class="loadinganim ? ' fixed flex ' : ' hideit'"
+    class="fixed flex top-0 right-0 w-full h-screen bg-purple-600"
+  >
+    <div class="m-auto">
+      <div class="flip-to-square m-auto">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="text-center text-white popins-font">Please Wait</div>
+    </div>
+  </div>
 </template>
 
 <script>
+import { mapActions, mapState } from "vuex";
 import { Vue3Marquee } from "vue3-marquee";
 import "vue3-marquee/dist/style.css";
+import { cloneVNode } from "vue";
+
 export default {
   components: {
     Vue3Marquee,
   },
   data() {
     return {
+      loadinganim: true,
+      postdetail: {
+        author: "",
+        content: "",
+        posteddate: "",
+        thumbnail: "",
+        title: "",
+      },
+      id: this.$route.params.id,
+
       helloArray: ["hello", "こんにちは", "bonjour", "안녕하세요"],
     };
   },
+
+  async created() {
+    this.getdetail();
+  },
+
+  watch: {
+    loadinganim(val) {
+      if (!this.loadinganim) {
+        setTimeout(() => {
+          document.getElementById("loadinganim").remove();
+        }, 500);
+      }
+    },
+  },
+
+  methods: {
+    ...mapActions({
+      getPostDetail: "indexPageStore/getPostdetail",
+    }),
+
+    async getdetail() {
+      try {
+        let response = await this.getPostDetail(this.id);
+        let c = this.postdetail;
+        let j = this.id;
+
+        c.author = response[j].author;
+        c.title = response[j].title;
+        c.content = response[j].content;
+        c.thumbnail = response[j].thumbnail;
+        this.loadinganim = false;
+      } catch (error) {
+        console.log("errror" + error);
+      }
+    },
+  },
 };
 </script>
+<style>
+@keyframes hideanim {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0;
+    display: none;
+  }
+}
+
+.hideit {
+  animation: hideanim 1s normal forwards;
+  animation-iteration-count: 1;
+}
+
+@-webkit-keyframes flip-to-square {
+  0% {
+    -webkit-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+  }
+  50%,
+  75% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+  }
+}
+@keyframes flip-to-square {
+  0% {
+    -webkit-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+  }
+  50%,
+  75% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+  }
+  100% {
+    opacity: 0;
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
+  }
+}
+
+.flip-to-square {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: 60px;
+  width: 60px;
+}
+.flip-to-square div {
+  -webkit-animation: flip-to-square 1.5s calc(var(--delay) * 1s) infinite backwards;
+  animation: flip-to-square 1.5s calc(var(--delay) * 1s) infinite backwards;
+  background-color: white;
+}
+.flip-to-square div:nth-child(1) {
+  --delay: 0.1;
+}
+.flip-to-square div:nth-child(2) {
+  --delay: 0.2;
+}
+.flip-to-square div:nth-child(3) {
+  --delay: 0.3;
+}
+.flip-to-square div:nth-child(4) {
+  --delay: 0.4;
+}
+.flip-to-square div:nth-child(5) {
+  --delay: 0.5;
+}
+.flip-to-square div:nth-child(6) {
+  --delay: 0.6;
+}
+.flip-to-square div:nth-child(7) {
+  --delay: 0.7;
+}
+.flip-to-square div:nth-child(8) {
+  --delay: 0.8;
+}
+.flip-to-square div:nth-child(9) {
+  --delay: 0.9;
+}
+</style>
