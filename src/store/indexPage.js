@@ -30,6 +30,22 @@ export const indexPageStore = {
         },
 
 
+        async getPostdetail({ commit, dispatch }, id) {
+            console.log(id)
+            try {
+                const db = getDatabase();
+                const recentPostsRef = await get(query(ref(db, "posts"), orderByChild("id"), equalTo(id)));
+                console.log(recentPostsRef.val());
+                return Promise.resolve(recentPostsRef.val())
+            } catch (error) {
+                console.log(error)
+                return Promise.reject(error)
+            }
+
+
+        }
+
+
 
     }
 }

@@ -100,7 +100,7 @@
       </div>
     </div>
 
-    <div class="h-screen bg-pink-700 snap-start">
+    <div class="h-screen bg-pink-600 snap-start">
       <div class="grid place-items-center h-screen">
         <div class="md:flex w-4/5 items-center">
           <div class="container w-full md:w-1/3 md:border-r-2 md:border-white">
@@ -182,12 +182,34 @@
       </div>
     </div>
   </div>
+
+  <div
+    id="loadinganim"
+    :class="loadinganim > 3 ? ' fixed flex ' : ' hideit'"
+    class="fixed flex top-0 right-0 w-full h-screen bg-purple-600"
+  >
+    <div class="m-auto">
+      <div class="flip-to-square m-auto">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+      <div class="text-center text-white popins-font">Please Wait</div>
+    </div>
+  </div>
 </template>
 <script>
 import { mapActions } from "vuex";
 export default {
   data() {
     return {
+      loadinganim: 0,
       csharp: [],
       threeDmodels: [],
       social: {
@@ -210,6 +232,19 @@ export default {
     this.getsocial();
   },
 
+  watch: {
+    loadinganim(val) {
+      console.log(this.loadinganim);
+      if (this.loadinganim >= 3) {
+        setTimeout(() => {
+          document.getElementById("loadinganim").classList.add("hidden");
+        }, 500);
+      } else {
+        document.getElementById("loadinganim").classList.remove("hidden");
+      }
+    },
+  },
+
   methods: {
     ...mapActions({
       postList: "indexPageStore/getPostList",
@@ -224,6 +259,7 @@ export default {
             this.csharp.push({ ...response[key], id: key });
           }
         }
+        this.loadinganim = this.loadinganim + 1;
       } catch (error) {
         console.log(error);
       }
@@ -238,6 +274,7 @@ export default {
           }
         }
         // console.log("-------s" + response[0].author);
+        this.loadinganim = this.loadinganim + 1;
       } catch (error) {
         console.log(error);
       }
@@ -247,6 +284,7 @@ export default {
         const a = await this.getsocialaccounts();
 
         this.social = a;
+        this.loadinganim = this.loadinganim + 1;
       } catch (error) {}
     },
     camelCase(name) {
