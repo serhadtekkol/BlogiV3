@@ -217,48 +217,6 @@ export const adminstore = {
             }
 
         },
-        // async getTags({ commit, dispatch }, ) {
-
-
-        //     const url = "tags/";
-
-        //     try {
-
-        //         const dbRef = ref(getDatabase());
-        //         let c = get(child(dbRef, url)).then((snapshot) => {
-        //             if (snapshot.exists()) {
-        //                 console.log("sa")
-        //                 return snapshot.val();
-
-
-        //             } else {
-        //                 console.log("No data available");
-        //             }
-
-        //         }).catch((error) => {
-        //             console.error(error);
-        //         });
-        //         console.log(c);
-        //         return Promise.resolve(c)
-        //     } catch (error) {
-
-        //         return Promise.reject(error)
-
-        //     }
-
-
-        //     // try {
-        //     //     let response = await axios.get("/tags.json")
-
-        //     //     return Promise.resolve(response)
-
-        //     // } catch (error) {
-
-        //     //     console.log(error)
-        //     //     return Promise.reject(error)
-        //     // }
-
-        // },
 
 
         async updateGeneral({ commit, dispatch }, { table, id, payload }) {

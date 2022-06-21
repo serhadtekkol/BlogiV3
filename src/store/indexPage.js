@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-import { getDatabase, ref, onValue, child, get, update, set, query, orderByChild, equalTo, remove } from "firebase/database";
+import { ref, onValue, child, get, update, set, query, orderByChild, equalTo, remove, getDatabase } from "firebase/database";
 export const indexPageStore = {
     namespaced: true,
     state: {
@@ -7,6 +7,7 @@ export const indexPageStore = {
 
 
     },
+
     actions: {
 
 
@@ -35,7 +36,7 @@ export const indexPageStore = {
             try {
                 const db = getDatabase();
                 const recentPostsRef = await get(query(ref(db, "posts"), orderByChild("id"), equalTo(id)));
-                console.log(recentPostsRef.val());
+
                 return Promise.resolve(recentPostsRef.val())
             } catch (error) {
                 console.log(error)
@@ -43,7 +44,14 @@ export const indexPageStore = {
             }
 
 
-        }
+        },
+
+
+
+
+
+
+
 
 
 

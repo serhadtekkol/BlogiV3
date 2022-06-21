@@ -1,12 +1,13 @@
 {
-  "rules": {
-    "posts": {
-      ".indexOn": [
-        "tag",
-        "isdraft"
-      ]
-    },
-    ".read": true,
-    ".write": "auth.uid != null "
-  }
+    "rules": {
+        "posts": {
+            ".indexOn": [
+                "tag",
+                "isdraft",
+                "id"
+            ]
+        },
+        ".read": true,
+        ".write": "auth.uid != null "
+    }
 }

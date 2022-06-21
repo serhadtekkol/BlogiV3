@@ -1,9 +1,12 @@
 <template>
-  <!-- <div class="bg-gradient-to-t from-purple-700 to-blue-700 px-4"> -->
-  <div class="mx-auto container sm:w-3/4 sm:border-x sm:border-gray-300">
-    <div>menu component will be in here</div>
+  <navVue></navVue>
+  <announcementVue></announcementVue>
+  <!-- <div
+    class="mx-auto relative md:top-10 top-20 container sm:w-3/4 sm:border-x sm:border-gray-300/20"
+  > -->
 
-    <div class="min-h-screen popins-font">
+  <div class="mx-auto relative container sm:w-3/4 sm:border-x sm:border-gray-300/20">
+    <div class="popins-font">
       <div class="">
         <div class="">
           <img
@@ -34,12 +37,12 @@
               <div
                 class="border shadow mx-2 px-4 py-1.5 bg-gray-100 text-gray-600 rounded-md w-fit text-xs"
               >
-                Created : 19.06.2022
+                Created : {{ unixtimeconvert(postdetail.posteddate) }}
               </div>
               <div
                 class="border shadow mx-2 px-4 py-1.5 bg-gray-100 text-gray-600 rounded-md w-fit text-xs"
               >
-                Updated : 19.06.2022
+                Updated : {{ unixtimeconvert(postdetail.updateddate) }}
               </div>
             </div>
           </div>
@@ -48,31 +51,11 @@
       </div>
     </div>
   </div>
-  <div class="fixed bottom-0 bg-purple-500 w-full flex py-2">
-    <div class="flex-1"><i class="far fa-bullhorn text-white px-4"></i></div>
-    <Vue3Marquee
-      :pauseOnHover="true"
-      :clone="true"
-      :duration="10"
-      :gradient="true"
-      :gradientColor="[168, 85, 247]"
-      :gradientWidth="`10%`"
-    >
-      <span
-        v-for="(word, index) in helloArray"
-        :key="index"
-        class="word-style text-white mx-4"
-        :class="{ word: true, odd: index % 2 === 0, even: index % 2 === 1 }"
-      >
-        <i class="far fa-circle-chevron-right"></i> {{ word }}
-      </span>
-    </Vue3Marquee>
-  </div>
 
   <div
     id="loadinganim"
     :class="loadinganim ? ' fixed flex ' : ' hideit'"
-    class="fixed flex top-0 right-0 w-full h-screen bg-purple-600"
+    class="fixed flex top-0 z-50 right-0 w-full h-screen bg-purple-600"
   >
     <div class="m-auto">
       <div class="flip-to-square m-auto">
@@ -94,12 +77,15 @@
 <script>
 import { mapActions, mapState } from "vuex";
 import { Vue3Marquee } from "vue3-marquee";
+import announcementVue from "../components/announcement.vue";
+import navVue from "../components/Navigation.vue";
 import "vue3-marquee/dist/style.css";
-import { cloneVNode } from "vue";
 
 export default {
   components: {
     Vue3Marquee,
+    announcementVue,
+    navVue,
   },
   data() {
     return {
@@ -108,12 +94,11 @@ export default {
         author: "",
         content: "",
         posteddate: "",
+        updateddate: "",
         thumbnail: "",
         title: "",
       },
       id: this.$route.params.id,
-
-      helloArray: ["hello", "こんにちは", "bonjour", "안녕하세요"],
     };
   },
 
@@ -136,6 +121,11 @@ export default {
       getPostDetail: "indexPageStore/getPostdetail",
     }),
 
+    unixtimeconvert(unix) {
+      var d = new Date(unix).toLocaleDateString("tr-TR");
+      var t = new Date(unix).toLocaleTimeString("tr-TR");
+      return d + " " + t;
+    },
     async getdetail() {
       try {
         let response = await this.getPostDetail(this.id);
@@ -146,6 +136,8 @@ export default {
         c.title = response[j].title;
         c.content = response[j].content;
         c.thumbnail = response[j].thumbnail;
+        c.posteddate = response[j].posteddate;
+        c.updateddate = response[j].updateddate;
         this.loadinganim = false;
       } catch (error) {
         console.log("errror" + error);
