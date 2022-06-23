@@ -4,6 +4,7 @@ import webadminVue from '../views/webadmin.vue'
 import loginViewVue from '../views/loginView.vue'
 import newHome from '../views/newHome.vue'
 import postDetailVue from '../views/postDetail.vue'
+import CategoryListVue from '../views/CategoryList.vue'
 
 
 import store from '../store'
@@ -36,9 +37,9 @@ const router = createRouter({
         },
 
         {
-            path: '/categories/:category',
+            path: '/posts/:category',
             name: 'category',
-            component: HomeView
+            component: CategoryListVue
 
         },
 
