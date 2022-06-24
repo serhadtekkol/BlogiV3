@@ -1,5 +1,5 @@
 <template>
-  <div class="w-screen min-h-screen font-sans text-gray-900 bg-gray-50 flex">
+  <div class="min-h-screen font-sans text-gray-900 bg-gray-50 flex">
     <adminNavApp></adminNavApp>
 
     <div class="flex-1 min-w-0">
@@ -8,7 +8,7 @@
         <div>Blogi V3</div>
       </div>
 
-      <div class="px-4">
+      <div class="px-4 overflow-auto">
         <dashboard v-if="this.$route.params.compo == 'dashboard'"></dashboard>
         <newContent v-if="this.$route.params.compo == 'newpost'"></newContent>
         <postList v-if="this.$route.params.compo == 'posts'"></postList>

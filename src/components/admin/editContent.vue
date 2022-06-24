@@ -1,25 +1,41 @@
 <template>
-  <div class="container mx-auto text-sm pb-10 pt-10">
+  <div class="container mx-auto text-sm text-gray-600 pb-10 pt-10">
     <div class="p-6 bg-white shadow-md rounded-md">
-      <h3 class="text-lg px-1 py-3 font-sans font-semibold tracking-widest">Edit Post</h3>
-      <div class="md:flex">
-        <div class="w-full px-3">
-          <label class="">Title</label><br />
-          <input type="text" v-model="post.title" class="inputs" />
-          <label class="">Thumbnail URL</label><br />
-          <input type="text" v-model="post.thumbnail" class="inputs" />
-          <ul class="text-gray-300 text-sm my-2">
-            <li
-              v-for="item in tags"
-              @click="selectCategory(item.tagname)"
-              :class="post.tag == item.tagname ? 'tagselected' : 'tagsnotselected'"
-              class="inline px-2 py-0.5 mb-2 m-1 rounded-lg uppercase text-xs"
+      <div class="">
+        <div class="">
+          <h3 class="text-lg px-1 py-3 font-sans font-semibold tracking-widest">
+            Edit Post
+          </h3>
+          <div class="md:flex">
+            <div
+              class="px-3 border basis-3/4 border-gray-200 rounded-md md:px-6 md:py-6 md:mr-4 py-6 my-4"
             >
-              {{ item.tagname }}
-            </li>
-          </ul>
-          <label class="">Summary</label><br />
-          <textarea type="text" v-model="post.summary" class="inputs" />
+              <label class="">Title</label><br />
+              <input type="text" v-model="post.title" class="inputs" />
+              <label class="">Thumbnail URL</label><br />
+              <input type="text" v-model="post.thumbnail" class="inputs" />
+              <ul class="text-gray-300 text-sm my-2">
+                <li
+                  v-for="item in tags"
+                  @click="selectCategory(item.tagname)"
+                  :class="post.tag == item.tagname ? 'tagselected' : 'tagsnotselected'"
+                  class="inline px-2 py-0.5 mb-2 m-1 rounded-lg uppercase text-xs"
+                >
+                  {{ item.tagname }}
+                </li>
+              </ul>
+              <label class="">Summary</label><br />
+
+              <textarea type="text" v-model="post.summary" class="inputs" />
+            </div>
+
+            <div
+              class="basis-1/4 px-3 border border-gray-200 rounded-md md:px-6 md:py-6 md:ml-4 py-6 my-4"
+            >
+              <label class="">File Or Image Upload</label><br />
+              <Fileupload></Fileupload>
+            </div>
+          </div>
 
           <label class="text-white">Content</label><br />
           <textarea v-model="post.content" id="myTextarea"></textarea>
@@ -59,6 +75,7 @@ import "../../assets/tinymce/tinymce.min.js";
 import "../../assets/tinymce/alljsfile";
 
 import { mapActions } from "vuex";
+import Fileupload from "./fileupload.vue";
 
 export default {
   data() {
@@ -89,7 +106,6 @@ export default {
         id: null,
       },
       returned: [],
-
       content: "",
       selectedCategory: "",
       tags: [],
@@ -115,7 +131,6 @@ export default {
     }),
     async postContent() {
       this.post.content = tinymce.get("myTextarea").getContent();
-
       try {
         await this.createpost({ payload: this.post });
         this.messageObject.error = false;
@@ -125,15 +140,12 @@ export default {
         this.messageObject.error = true;
         this.messageObject.show = true;
         this.messageObject.message = error;
-
         console.log(error);
       }
     },
-
     selectCategory(category) {
       this.post.tag = category;
     },
-
     async updatePost() {
       try {
         this.post.content = tinymce.get("myTextarea").getContent();
@@ -150,11 +162,9 @@ export default {
         this.messageObject.error = true;
         this.messageObject.show = true;
         this.messageObject.message = error;
-
         console.log(error);
       }
     },
-
     async getPostDetail() {
       this.isloaded = false;
       try {
@@ -167,10 +177,8 @@ export default {
         console.log("errror" + error);
       }
     },
-
     async gettags() {
       this.tags = [];
-
       this.inprogress = true;
       try {
         let response = await this.getList("tags");
@@ -183,7 +191,6 @@ export default {
         console.log(error);
       }
     },
-
     yasyasgleyy() {
       tinymce.remove();
       tinymce.init({
@@ -204,9 +211,7 @@ export default {
         autosave_retention: "2m",
         image_advtab: true,
         /*content_css: '//www.tiny.cloud/css/codepen.min.css',*/
-
         importcss_append: true,
-
         templates: [],
         template_cdate_format: "[Date Created (CDATE): %m/%d/%Y : %H:%M:%S]",
         template_mdate_format: "[Date Modified (MDATE): %m/%d/%Y : %H:%M:%S]",
@@ -220,5 +225,6 @@ export default {
       });
     },
   },
+  components: { Fileupload },
 };
 </script>

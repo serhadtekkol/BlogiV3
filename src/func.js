@@ -20,3 +20,14 @@ export const textToUrl = (paramter) => {
     return paramter.replace(" ", "-").replace("#", "sharp");
 
 }
+
+export const fileNameGen = (parameter) => {
+
+    const f = parameter.split(".")
+    const pc = f.length;
+    console.log(pc)
+
+    return "." + f[pc - 1];
+
+
+}

@@ -40,22 +40,29 @@
       </a>
       <div v-if="posts.length == 0">
         <div class="flex justify-center items-center">
-          <div class="text-center flex bg-purple-600 px-6 py-2 rounded-md text-white">
+          <div
+            class="text-center flex border border-purple-600 px-6 py-2 rounded-md text-purple-500 shadow-md"
+          >
             <div class="mr-3">
               <i class="far fa-triangle-exclamation"></i>
             </div>
 
-            <div>OOooowww Sorry :( no post added</div>
+            <div>
+              OOooowww Sorry :( <br />
+              No articles have been published yet in this category.
+            </div>
           </div>
         </div>
       </div>
       <!-- {{ this.$route.params.category }} -->
     </div>
   </div>
+  <splash id="loadinganim" :class="loadinganim ? ' fixed flex ' : ' hideit'"></splash>
 </template>
 
 <script>
 import NavigationVue from "../components/Navigation.vue";
+import loadingSplashVue from "../components/loadingSplash.vue";
 import announcementVue from "../components/announcement.vue";
 import { unixToDate, urlConvert } from "/src/func.js";
 import { mapActions } from "vuex";
@@ -64,21 +71,28 @@ export default {
     return {
       posts: [],
       filter: this.$route.params.id,
+      loadinganim: true,
     };
   },
 
   components: {
     navApp: NavigationVue,
     annApp: announcementVue,
+    splash: loadingSplashVue,
   },
   async created() {
     console.log(this.filter);
     this.getList();
-    console.log(this.posts.length);
   },
   watch: {
-    filter(newwa, old) {
-      console.log(newwa);
+    loadinganim(val) {
+      if (!this.loadinganim) {
+        setTimeout(() => {
+          document.getElementById("loadinganim").classList.add("hidden");
+        }, 500);
+      } else {
+        document.getElementById("loadinganim").classList.remove("hidden");
+      }
     },
   },
   methods: {
@@ -110,6 +124,7 @@ export default {
             this.posts.push({ ...r[k], id: k });
           }
         }
+        this.loadinganim = false;
       } catch (error) {
         console.log(error);
       }

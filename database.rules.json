@@ -7,6 +7,12 @@
                 "id"
             ]
         },
+        "tags": {
+            ".indexOn": [
+                "showninmenu",
+                "id"
+            ]
+        },
         ".read": true,
         ".write": "auth.uid != null "
     }

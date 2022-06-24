@@ -1,90 +1,95 @@
 <template>
-  <div class="h-screen fixed top-0 w-screen bg-slate-400/30 backdrop-blur-sm z-most-top">
-    <div class="flex justify-center items-center h-screen">
-      <div class="ring">
-        Wait<br />
-        Nau Nau
-        <span></span>
+  <div class="fixed flex top-0 z-50 right-0 w-full h-screen bg-purple-600">
+    <div class="m-auto">
+      <div class="flip-to-square m-auto">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
       </div>
+      <div class="text-center text-white popins-font">Please Wait</div>
     </div>
   </div>
 </template>
 <script>
 export default {};
 </script>
-<style scoped>
-.z-most-top {
-  z-index: 999999999999;
-}
-.ring {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 150px;
-  height: 150px;
-  background: transparent;
-  /* border: 3px solid #3c3c3c; */
-  border-radius: 50%;
-  text-align: center;
-  line-height: 150px;
-  font-family: sans-serif;
-  font-size: 20px;
-  color: #ff00dd;
-  letter-spacing: 4px;
-  text-transform: uppercase;
-  /* text-shadow: 0 0 10px #ff00b3; */
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
-}
-.ring:before {
-  content: "";
-  position: absolute;
-  top: -3px;
-  left: -3px;
-  width: 100%;
-  height: 100%;
-  border: 3px solid transparent;
-  border-top: 3px solid #ff008c;
-  border-right: 3px solid #ff00bf;
-  border-radius: 50%;
-  animation: animateC 2s linear infinite;
-}
-span {
-  display: block;
-  position: absolute;
-  top: calc(50% - 2px);
-  left: 50%;
-  width: 50%;
-  height: 4px;
-  background: transparent;
-  transform-origin: left;
-  animation: animate 2s linear infinite;
-}
-span:before {
-  content: "";
-  position: absolute;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: #ff008c;
-  top: -6px;
-  right: -8px;
-  box-shadow: 0 0 20px #ff008c;
-}
-@keyframes animateC {
+<style>
+@-webkit-keyframes flip-to-square {
   0% {
-    transform: rotate(0deg);
+    -webkit-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+  }
+  50%,
+  75% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
   }
   100% {
-    transform: rotate(360deg);
+    opacity: 0;
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
   }
 }
-@keyframes animate {
+@keyframes flip-to-square {
   0% {
-    transform: rotate(45deg);
+    -webkit-transform: rotateX(-90deg);
+    transform: rotateX(-90deg);
+  }
+  50%,
+  75% {
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
   }
   100% {
-    transform: rotate(405deg);
+    opacity: 0;
+    -webkit-transform: rotateX(0);
+    transform: rotateX(0);
   }
+}
+
+.flip-to-square {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  height: 60px;
+  width: 60px;
+}
+.flip-to-square div {
+  -webkit-animation: flip-to-square 1.5s calc(var(--delay) * 1s) infinite backwards;
+  animation: flip-to-square 1.5s calc(var(--delay) * 1s) infinite backwards;
+  background-color: white;
+}
+.flip-to-square div:nth-child(1) {
+  --delay: 0.1;
+}
+.flip-to-square div:nth-child(2) {
+  --delay: 0.2;
+}
+.flip-to-square div:nth-child(3) {
+  --delay: 0.3;
+}
+.flip-to-square div:nth-child(4) {
+  --delay: 0.4;
+}
+.flip-to-square div:nth-child(5) {
+  --delay: 0.5;
+}
+.flip-to-square div:nth-child(6) {
+  --delay: 0.6;
+}
+.flip-to-square div:nth-child(7) {
+  --delay: 0.7;
+}
+.flip-to-square div:nth-child(8) {
+  --delay: 0.8;
+}
+.flip-to-square div:nth-child(9) {
+  --delay: 0.9;
 }
 </style>

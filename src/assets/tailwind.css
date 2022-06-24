@@ -112,3 +112,18 @@ input {
 .nav>li {
     @apply mx-2
 }
+
+@keyframes hideanim {
+    0% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+        display: none;
+    }
+}
+
+.hideit {
+    animation: hideanim 1s normal forwards;
+    animation-iteration-count: 1;
+}

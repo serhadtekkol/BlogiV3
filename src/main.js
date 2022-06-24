@@ -16,6 +16,7 @@ import 'vue3-marquee/dist/style.css'
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from "firebase/analytics";
 import { getDatabase } from "firebase/database";
+import { getStorage } from "firebase/storage";
 import { getAuth, onAuthStateChanged } from '@firebase/auth'
 
 
@@ -24,6 +25,7 @@ const analytics = getAnalytics(appk);
 
 // Get a reference to the database service
 const database = getDatabase(appk);
+const storage = getStorage(appk);
 
 const auth = getAuth();
 
