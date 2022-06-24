@@ -54,11 +54,9 @@ export default {
           return response.json();
         })
         .then(function (data) {
-          console.log(data);
           return data;
         });
 
-      console.log(t.city);
       var announcdata = {
         description: "Your Location : " + t.city,
       };
@@ -79,7 +77,6 @@ export default {
           return response.json();
         })
         .then(function (data) {
-          console.log(data);
           return data;
         });
       var announcdata = {

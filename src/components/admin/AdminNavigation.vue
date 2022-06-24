@@ -133,16 +133,6 @@ export default {
       router.push("/login");
     },
     showonmobilemenu() {
-      // if (this.menushow) {
-      //   document.getElementById("navmenu").classListToggle("hidden");
-      //   console.log(this.menushow);
-      // } else {
-      //   console.log(this.menushow);
-
-      //   document.getElementById("navmenu").classList.add("hidden");
-      // }
-      // this.menushow = !this.menushow;
-
       var t = document.getElementById("navmenu");
 
       document.getElementById("navmenu").classList.toggle("hidden");

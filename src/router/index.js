@@ -37,7 +37,7 @@ const router = createRouter({
         },
 
         {
-            path: '/posts/:category',
+            path: '/posts/:id',
             name: 'category',
             component: CategoryListVue
 

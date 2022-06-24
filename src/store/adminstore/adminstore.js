@@ -2,6 +2,7 @@ import axios from "axios"
 import { v4 as uuidv4 } from 'uuid';
 import { getDatabase, ref, onValue, child, get, update, set, query, orderByChild, equalTo, remove } from "firebase/database";
 
+
 export const adminstore = {
     namespaced: true,
     state: {
@@ -202,7 +203,8 @@ export const adminstore = {
                 set(ref(db, 'tags/' + uuidv4()), {
                     tagname: payload.tagname,
                     tagdesc: payload.tagdesc,
-                    tagFilterQueryName: payload.tagFilterQueryName,
+                    showninmenu: payload.showninmenu,
+                    icon: payload.icon
 
 
 
@@ -252,7 +254,8 @@ export const adminstore = {
                 const postData = {
                     tagname: payload.tagname,
                     tagdesc: payload.tagdesc,
-                    tagFilterQueryName: payload.tagFilterQueryName
+                    showninmenu: payload.showninmenu,
+                    icon: payload.icon
                 }
 
 
@@ -335,7 +338,6 @@ export const adminstore = {
 
 
         async filterData({ commit, dispatch }, { payload }) {
-
 
 
             try {

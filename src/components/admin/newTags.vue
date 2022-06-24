@@ -7,8 +7,13 @@
       <input type="text" v-model="tag.tagname" class="inputs" />
       <label class="">Tag Description</label><br />
       <input type="text" v-model="tag.tagdesc" class="inputs" />
-      <label class="">Tag Filter Query Name</label><br />
-      <input type="text" v-model="tag.tagFilterQueryName" class="inputs" />
+      <label class="">Shown In Menu</label><br />
+      <select v-model="tag.showninmenu" class="inputs">
+        <option value="1">True</option>
+        <option value="0">False</option>
+      </select>
+      <label class="">Icon</label><br />
+      <input type="text" v-model="tag.icon" class="inputs" />
 
       <button @click="addnewtag" class="btn-scs">{{ !isnew ? "Update" : "Save" }}</button>
       <button v-if="!isnew" @click="isnew = true" class="btn-dng">Cancel</button>
@@ -64,7 +69,8 @@ export default {
         tagname: "",
         tagdesc: "",
         tagid: "",
-        tagFilterQueryName: "",
+        icon: "",
+        showninmenu: "",
       },
       messageObject: {
         show: false,
@@ -87,8 +93,10 @@ export default {
       this.tag.tagname = this.tagList[index].tagname;
       this.tag.tagdesc = this.tagList[index].tagdesc;
       this.tag.tagid = this.tagList[index].id;
+      this.tag.icon = this.tagList[index].icon;
+      this.tag.showninmenu = this.tagList[index].showninmenu;
       //todo hey
-      this.tag.tagFilterQueryName = this.tagList[index].tagFilterQueryName;
+
       this.isnew = false;
     },
 
