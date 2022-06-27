@@ -5,6 +5,8 @@ import loginViewVue from '../views/loginView.vue'
 import newHome from '../views/newHome.vue'
 import postDetailVue from '../views/postDetail.vue'
 import CategoryListVue from '../views/CategoryList.vue'
+import apps from '../views/apps.vue'
+
 
 
 import store from '../store'
@@ -64,6 +66,13 @@ const router = createRouter({
             component: webadminVue,
             meta: { requiresAuth: true }
         },
+
+        {
+            path: '/apps/:appname?',
+            name: 'apps',
+            component: apps
+
+        }
 
 
     ]

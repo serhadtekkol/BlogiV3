@@ -28,20 +28,12 @@
 
         <div class="w-full">
           <label class="mt-2">Generated Filename</label><br />
-          <div class="inline-block relative mx-2 w-full">
-            <span class="absolute top-4 left-3"
-              ><i class="far fa-recycle text-blue-600"></i></span
-            ><input type="text" :value="generatedval" class="inputs-w-icon pl-8 w-full" />
-          </div>
+          <input type="text" :value="generatedval" class="inputs" />
         </div>
 
         <div class="w-full">
           <label class="mt-2">Image link</label><br />
-          <div class="inline-block relative mx-2 w-full">
-            <span class="absolute top-4 left-3"
-              ><i class="far fa-recycle text-blue-600"></i></span
-            ><input type="text" :value="generatedurl" class="inputs-w-icon pl-8 w-full" />
-          </div>
+          <input type="text" :value="generatedurl" class="inputs" />
         </div>
       </div>
     </div>
@@ -54,7 +46,7 @@
         @click="onUpload"
         :disabled="selected == '' ? true : false"
       >
-        {{ uploadbuttontext }}
+        <span v-html="uploadbuttontext"></span>
       </button>
     </div>
   </div>
@@ -93,6 +85,14 @@ export default {
     selected(newa) {
       this.uploadbuttontext = "Upload";
     },
+    generatedurl(newa) {
+      var copyText = document.getElementById("myInput");
+
+      /* Copy the text inside the text field */
+      navigator.clipboard.writeText(this.generatedurl);
+
+      /* Alert the copied text */
+    },
   },
   methods: {
     previewImage(event) {
@@ -109,6 +109,8 @@ export default {
         getDownloadURL(ref(storage, fileurl))
           .then((url) => {
             this.generatedurl = url;
+            this.uploadbuttontext =
+              "<i class='far fa-check'></i> Link copied to clipboard";
           })
           .catch((error) => {
             console.log(error);

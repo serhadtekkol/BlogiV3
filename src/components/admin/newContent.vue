@@ -1,30 +1,46 @@
 <template>
   <div class="container mx-auto text-sm text-gray-600 pb-10 pt-10">
-    <div class="p-6 bg-white rounded-md mb-2 shadow-md">
-      <h3 class="text-lg px-1 py-3 font-sans font-semibold tracking-widest">New Post</h3>
-      <div class="md:flex">
-        <div class="w-full px-3">
-          <label class="">Title</label><br />
-          <input type="text" v-model="post.title" class="inputs" />
-          <label class="">Thumbnail URL</label><br />
-          <input type="text" v-model="post.thumbnail" class="inputs" />
-          <ul class="text-gray-300 text-sm my-2">
-            <li
-              v-for="item in tagList"
-              @click="selectCategory(item.tagname)"
-              :class="post.tag == item.tagname ? 'tagselected' : 'tagsnotselected'"
-              class="inline px-2 py-0.5 mb-2 m-1 rounded-lg uppercase text-xs"
+    <div class="p-6 bg-white shadow-md rounded-md">
+      <div class="">
+        <div class="">
+          <h3 class="text-lg px-1 py-3 font-sans font-semibold tracking-widest">
+            Edit Post
+          </h3>
+          <div class="md:flex">
+            <div
+              class="px-3 border basis-3/4 border-gray-200 rounded-md md:px-6 md:py-6 md:mr-4 py-6 my-4"
             >
-              {{ item.tagname }}
-            </li>
-          </ul>
-          <label class="">Summary</label><br />
-          <textarea type="text" v-model="post.summary" class="inputs" />
+              <label class="">Title</label><br />
+              <input type="text" v-model="post.title" class="inputs" />
+              <label class="">Thumbnail URL</label><br />
+              <input type="text" v-model="post.thumbnail" class="inputs" />
+              <ul class="text-gray-300 text-sm my-2">
+                <li
+                  v-for="item in tags"
+                  @click="selectCategory(item.tagname)"
+                  :class="post.tag == item.tagname ? 'tagselected' : 'tagsnotselected'"
+                  class="inline px-2 py-0.5 mb-2 m-1 rounded-lg uppercase text-xs"
+                >
+                  {{ item.tagname }}
+                </li>
+              </ul>
+              <label class="">Summary</label><br />
+
+              <textarea type="text" v-model="post.summary" class="inputs" />
+            </div>
+
+            <div
+              class="basis-1/4 px-3 border border-gray-200 rounded-md md:px-6 md:py-6 md:ml-4 py-6 my-4"
+            >
+              <label class="">File Or Image Upload</label><br />
+              <Fileupload></Fileupload>
+            </div>
+          </div>
 
           <label class="text-white">Content</label><br />
           <textarea v-model="post.content" id="myTextarea"></textarea>
-          <button @click="postContent" class="btn-scs">Post It</button>
-          <button @click="postContent" class="btn-default">SaveTo LocalStorage</button>
+          <button @click="updatePost" class="btn-scs">Post It</button>
+
           <div
             v-if="messageObject.show"
             :class="messageObject.error ? 'bg-red-500/80' : 'bg-green-600/50'"
@@ -47,7 +63,7 @@
 
   <div
     :class="isloaded ? 'hidden' : ''"
-    class="grid place-items-center fixed top-0 left-0 w-screen h-screen bg-slate-600/40 backdrop-blur-sm mx-auto text-center z-100"
+    class="z-50 grid place-items-center fixed top-0 w-screen h-screen bg-slate-600/40 backdrop-blur-sm mx-auto text-center"
   >
     <span class="text-white text-xl">
       Please Wait While Components Loading <i class="far fa-spinner-third fa-spin"></i
@@ -57,7 +73,7 @@
 <script>
 import "../../assets/tinymce/tinymce.min.js";
 import "../../assets/tinymce/alljsfile";
-
+import Fileupload from "./fileupload.vue";
 import { mapActions } from "vuex";
 
 export default {
@@ -87,7 +103,7 @@ export default {
 
       content: "",
       selectedCategory: "",
-      tagList: [],
+      tags: [],
       tag: {
         tagname: "",
         tagdesc: "",
@@ -136,7 +152,7 @@ export default {
       try {
         let response = await this.getList("tags");
         for (let key in response) {
-          this.tagList.push({ ...response[key], id: key });
+          this.tags.push({ ...response[key], id: key });
         }
         this.isloaded = this.isloaded + 1;
         // console.log(response);
@@ -182,5 +198,6 @@ export default {
       console.log("yuklendi");
     },
   },
+  components: { Fileupload },
 };
 </script>

@@ -81,19 +81,26 @@
       <div class="grid place-items-center h-screen">
         <div class="container w-full text-center md:w-1/3">
           <span class="text-white poppins-font text-4xl md:text-6xl font-semibold">
-            Vue.Js</span
+            Tools <span class="text-xs">(Vue.Js with Tailwind)</span></span
           >
           <br />
           <div class="grid grid-cols-3 gap-4 place-items-center mt-10">
-            <div>
-              <i class="fa-brands fa-twitter text-white text-4xl"></i>
+            <div id="section1">
+              <div>
+                <i class="far fa-clock-five text-white text-4xl"></i>
+              </div>
+              <div class="bg-white text-sm mt-2 rounded-md px-2 py-1.5 hover:shadow-md">
+                <a href="/apps/countdown"> <span> Countdown Timer</span></a>
+              </div>
             </div>
 
-            <div>
-              <i class="fa-brands fa-linkedin text-white text-4xl"></i>
-            </div>
-            <div>
-              <i class="fa-brands fa-github text-white text-4xl"></i>
+            <div id="section1">
+              <div>
+                <i class="far fa-hat-wizard text-white text-4xl"></i>
+              </div>
+              <div class="bg-white text-sm mt-2 rounded-md px-2 py-1.5 hover:shadow-md">
+                <a href="#"> <span> Soon</span></a>
+              </div>
             </div>
           </div>
         </div>
