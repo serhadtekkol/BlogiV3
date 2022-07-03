@@ -29,6 +29,25 @@ export const indexPageStore = {
 
 
         },
+        async selectedPostsInPage() {
+
+
+            try {
+
+                const db = getDatabase();
+                const recentPostsRef = await get(query(ref(db, "posts"), orderByChild("isShownInMainPage"), equalTo(true)));
+                // console.log(recentPostsRef.val());
+                return Promise.resolve(recentPostsRef.val())
+            } catch (error) {
+
+                return Promise.reject(error)
+
+            }
+
+
+
+        },
+
 
 
         async getPostdetail({ commit, dispatch }, id) {

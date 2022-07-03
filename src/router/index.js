@@ -1,12 +1,12 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomePostView.vue'
+
 import webadminVue from '../views/webadmin.vue'
 import loginViewVue from '../views/loginView.vue'
-import newHome from '../views/newHome.vue'
+
 import postDetailVue from '../views/postDetail.vue'
 import CategoryListVue from '../views/CategoryList.vue'
 import apps from '../views/apps.vue'
-
+import homeviewVue from '../views/homeview.vue'
 
 
 import store from '../store'
@@ -16,19 +16,21 @@ import store from '../store'
 const router = createRouter({
     history: createWebHistory(
         import.meta.env.BASE_URL),
-    routes: [{
-            path: '/',
-            name: 'home',
-            // component: HomeView,
-            component: newHome,
+    routes: [
 
-        },
         // {
-        //     path: '/:compo',
-        //     name: 'messageme',
-        //     component: HomeView
+        //     path: '/',
+        //     name: 'home',
+        //     // component: HomeView,
+        //     component: newHome,
 
         // },
+        {
+            path: '/',
+            name: 'homem',
+            component: homeviewVue
+
+        },
 
         {
             path: '/detail/:id',

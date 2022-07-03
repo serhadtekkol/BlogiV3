@@ -39,7 +39,7 @@
 
           <label class="text-white">Content</label><br />
           <textarea v-model="post.content" id="myTextarea"></textarea>
-          <button @click="updatePost" class="btn-scs">Post It</button>
+          <button @click="postContent" class="btn-scs">Post It</button>
 
           <div
             v-if="messageObject.show"

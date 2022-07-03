@@ -110,6 +110,26 @@
     </div>
   </div>
 
+  <div class="p-6 bg-white rounded-md mb-2 mt-6 shadow-md">
+    <h2 class="text-xl mb-4">Select Posts for showing on main page</h2>
+
+    <button
+      @click="changePostStatus(index, post.id, post.isShownInMainPage ? false : true)"
+      :class="
+        post.isShownInMainPage == true
+          ? 'border-l-2 border-lime-500'
+          : 'border-l-2 border-red-600'
+      "
+      v-for="(post, index) in posts"
+      class="flex px-2 py-2 mb-2 w-full hover:bg-gray-100"
+    >
+      <div class="flex-none w-20 text-xs self-center">
+        <span class="bg-gray-300 px-1 py-1 rounded-lg"> {{ post.tag }}</span>
+      </div>
+      <div class="flex-1 w-20 text-sm self-center text-left">{{ post.title }}</div>
+    </button>
+  </div>
+
   <app-alert
     @alert="deleteReturn($event)"
     v-if="messageboxShow.show"
@@ -125,6 +145,7 @@ export default {
   },
   data() {
     return {
+      posts: [],
       announcements: [],
       announcement: {
         id: "",
@@ -162,6 +183,7 @@ export default {
 
   created() {
     this.getsocial();
+    this.getList();
     this.getAnnouncement();
   },
   methods: {
@@ -171,11 +193,28 @@ export default {
       setannouncement: "adminstore/setAnnouncement",
       getannouncement: "adminstore/getAnnouncement",
       deleteannouncement: "adminstore/deleteAnnouncement",
+      getPostList: "adminstore/getpostlist",
+      updateAction: "adminstore/updateGeneral",
     }),
 
     editanno(index) {
       this.announcement.description = this.announcements[index].description;
       this.announcement.isnew = false;
+    },
+
+    async changePostStatus(index, id, status) {
+      this.posts[index].isShownInMainPage = status;
+
+      this.post.isShownInMainPage = status;
+      try {
+        await this.updateAction({
+          table: "posts",
+          id: id,
+          payload: this.posts[index],
+        });
+      } catch (error) {
+        console.log(error);
+      }
     },
 
     deleteAct(index, id) {
@@ -193,6 +232,28 @@ export default {
         await this.deleteannouncement({ payload: payload });
         this.announcements = [];
         this.getAnnouncement();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+
+    async getList() {
+      try {
+        const r = await this.getPostList();
+        for (let key in r) {
+          if (r[key].isShownInMainPage === undefined) {
+            this.posts.push({
+              ...r[key],
+              id: key,
+              isShownInMainPage: false,
+            });
+          } else {
+            this.posts.push({
+              ...r[key],
+              id: key,
+            });
+          }
+        }
       } catch (error) {
         console.log(error);
       }

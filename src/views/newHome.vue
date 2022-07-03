@@ -1,38 +1,51 @@
 <template>
-  <div class="snap-y snap-mandatory h-screen overflow-scroll soh">
-    <!-- <div class="overflow-scroll soh"> -->
-    <div class="h-screen bg-white snap-center">
+  <div @scroll="onScroll" class="containerr h-screen">
+    <!-- begin home -->
+
+    <div class="section bg-white h-screen">
       <div class="grid place-items-center h-screen">
         <span
+          id="typewrite"
           class="text-6xl raleway-font font-light md:w-3/5 w-10/12 text-li text-gray-700 text-center"
           ><span class="text-6xl raleway-font font-light w-3/5 text-gray-800">
             Hi!, I'm
           </span>
           <span class="text-6xl raleway-font font-light w-3/5 namespan">Serhad</span
-          ><br /><span class="md:text-2xl text-lg -mt-10 pr-2">Statistician |</span>
-          <span class="md:text-2xl text-lg -mt-10 pr-2">Engineer |</span
-          ><span class="md:text-2xl text-lg -mt-10">Software Developer</span>
+          ><br />
+          <div class="md:text-2xl text-lg pr-2" id="statistician">
+            <span class="md:text-2xl text-lg -mt-10 pr-2">Statistician |</span>
+            <span class="md:text-2xl text-lg -mt-10 pr-2">Engineer |</span
+            ><span class="md:text-2xl text-lg -mt-10">Software Developer</span>
+          </div>
         </span>
       </div>
       <div
+        v-if="!scrolldowned"
         class="absolute right-10 bottom-6 animate-bounce text-white bg-gray-500/30 backdrop-blur-md text-sm px-2 rounded-md py-1.5"
       >
         Scroll Down
       </div>
     </div>
 
+    <!-- home end -->
+    <!-- csharp begin -->
+
     <div
-      class="h-screen bg-gray-800 snap-start bg-gradient-to-t from-gray-700 to-gray-900"
+      class="section bg-gray-800 bg-gradient-to-t from-gray-700 to-gray-900 csharp h-screen"
     >
       <div
+        id="csf"
         class="text-white font-light raleway-font text-4xl md:text-6xl w-full px-10 container pt-20"
       >
         >_ C# Projects
       </div>
 
-      <div class="m-auto w-5/6 pt-6">
-        <!-- <div class="grid place-items-center h-screen w-5/6"> -->
-        <div
+      <div id="csw" class="grid place-items-center h-screen popins-font w-4/5">
+        <a href="" class="bg-blue-700 text-white py-1.5 px-2 rounded-md w-full"
+          >Session Kullanımı</a
+        >
+
+        <!-- <div
           class="px-6 w-full text-sm border border-gray-500 py-10 rounded-sm bg-gray-700"
         >
           <div class="text-pink-600 text-bold">
@@ -73,41 +86,38 @@
               <div class="text-white">}</div>
             </router-link>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
 
-    <div class="h-screen bg-emerald-600 snap-start">
-      <div class="grid place-items-center h-screen">
-        <div class="container w-full text-center md:w-1/3">
-          <span class="text-white poppins-font text-4xl md:text-6xl font-semibold">
-            Tools <span class="text-xs">(Vue.Js with Tailwind)</span></span
-          >
-          <br />
-          <div class="grid grid-cols-3 gap-4 place-items-center mt-10">
-            <div id="section1">
-              <div>
-                <i class="far fa-clock-five text-white text-4xl"></i>
-              </div>
-              <div class="bg-white text-sm mt-2 rounded-md px-2 py-1.5 hover:shadow-md">
-                <a href="/apps/countdown"> <span> Countdown Timer</span></a>
-              </div>
-            </div>
+    <!-- csharp end -->
+    <!-- vuejs begin -->
 
-            <div id="section1">
-              <div>
-                <i class="far fa-hat-wizard text-white text-4xl"></i>
-              </div>
-              <div class="bg-white text-sm mt-2 rounded-md px-2 py-1.5 hover:shadow-md">
-                <a href="#"> <span> Soon</span></a>
-              </div>
+    <div class="bg-yellow-600 section h-screen">
+      <div class="grid place-items-center h-screen">
+        <div class="w-4/5 items-center">
+          <div>
+            <div class="my-4 text-3xl text-white">
+              TOOLS <span class="text-sm text-gray-300">vue.js tailwind</span>
             </div>
+          </div>
+          <div class="mb-4">
+            <a href="/apps/countdown">
+              <div
+                class="w-full shadow-lg relative rounded-lg bg-cover bg-[url('https://images.pexels.com/photos/1198264/pexels-photo-1198264.jpeg?auto=compress&cs=tinysrgb&w=1260&h=760&dpr=1')]"
+              >
+                <div class="popins-font px-4 py-6 text-2xl">CountDown Timer</div>
+              </div>
+            </a>
           </div>
         </div>
       </div>
     </div>
 
-    <div class="h-screen bg-pink-600 snap-start">
+    <!-- vue js end -->
+    <!-- 3d models begin -->
+
+    <div class="bg-pink-600 section h-screen">
       <div class="grid place-items-center h-screen">
         <div class="md:flex w-4/5 items-center">
           <div class="container w-full md:w-1/3 md:border-r-2 md:border-white">
@@ -135,10 +145,18 @@
       </div>
     </div>
 
-    <div class="h-screen bg-sky-700 snap-start bg-gradient-to-t from-purple-500">
-      <div class="grid place-items-center h-screen">
-        <div class="container w-full text-center md:w-1/3">
-          <span class="text-white poppins-font text-4xl md:text-6xl font-semibold">
+    <!-- 3d models end -->
+    <!-- portfolio begin -->
+    <div
+      id="portfolio"
+      class="h-screen section bg-sky-700 bg-gradient-to-t from-purple-500"
+    >
+      <div class="container grid place-items-center h-screen">
+        <div class="w-full text-center md:w-1/3">
+          <span
+            id="platformtext"
+            class="text-white poppins-font text-4xl md:text-6xl font-semibold w-full"
+          >
             Platforms</span
           >
           <br />
@@ -188,8 +206,13 @@
         </div>
       </div>
     </div>
-  </div>
 
+    <!-- portfoio end -->
+  </div>
+  <div class="rotate-45 text-center fixed -right-10 px-10 py-4 -top-4 bg-white w-fit">
+    Still<br />
+    Developing
+  </div>
   <div
     id="loadinganim"
     :class="loadinganim > 3 ? ' fixed flex ' : ' hideit'"
@@ -213,11 +236,16 @@
 </template>
 <script>
 import { mapActions } from "vuex";
+
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { TextPlugin } from "gsap/TextPlugin";
 export default {
   data() {
     return {
       loadinganim: 0,
       csharp: [],
+      scrolldowned: false,
       threeDmodels: [],
       social: {
         isnew: false,
@@ -229,6 +257,7 @@ export default {
       },
     };
   },
+
   async created() {
     console.clear();
     console.log("Created with " + "%c❤" + "%c by Serhad", "color:red;", "color:black;");
@@ -252,11 +281,53 @@ export default {
     },
   },
 
+  mounted() {
+    this.anm();
+  },
+
   methods: {
     ...mapActions({
       postList: "indexPageStore/getPostList",
       getsocialaccounts: "adminstore/getSocial",
     }),
+    onScroll({ target: { scrollTop, clientHeight, scrollHeight } }) {
+      if (scrollTop + clientHeight + 50 >= scrollHeight) {
+        this.scrolldowned = true;
+      } else {
+        this.scrolldowned = false;
+      }
+    },
+    anm() {
+      gsap.registerPlugin(TextPlugin);
+      gsap.defaults({ ease: "none" });
+
+      const tl = gsap.timeline({ repeat: 3, repeatDelay: 1, yoyo: true });
+      tl.to("#statistician", {
+        duration: 2,
+        text: "console.log('Statistician | Engineer | Software Developer')",
+      });
+
+      gsap.registerPlugin(ScrollTrigger);
+      ScrollTrigger.defaults({
+        scroller: ".containerr",
+        toggleActions: "restart restart restart restart",
+      });
+
+      gsap.to("#csf", {
+        scrollTrigger: "#csf",
+        duration: 1,
+        x: 150,
+      });
+
+      gsap.fromTo(
+        "#tools1",
+        {
+          x: -30,
+          opacity: 0.6,
+        },
+        { scrollTrigger: "#tools1", opacity: 1, x: 0, duration: 0.6 }
+      );
+    },
 
     async getcsharp() {
       try {
@@ -313,6 +384,20 @@ export default {
 </script>
 
 <style scoped>
+.containerr {
+  overflow-y: scroll;
+  overflow-x: hidden;
+
+  scroll-snap-type: mandatory;
+  scroll-snap-points-y: repeat(100vh);
+  scroll-snap-type: y mandatory;
+  scroll-behavior: smooth;
+}
+
+.section {
+  scroll-snap-align: start;
+}
+
 .sociallink:hover + .noti {
   position: absolute;
   width: 70px;

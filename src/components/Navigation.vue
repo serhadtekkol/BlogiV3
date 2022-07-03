@@ -24,6 +24,13 @@
         </li>
       </router-link>
 
+      <router-link to="/posts/all" class="text-gray-400 mr-6">
+        <li
+          class="md:inline border-b md:border-transparent border-gray-200 py-1.5 px-2 hover:bg-purple-500 hover:text-white rounded-lg"
+        >
+          <i class="far fa-border-all mr-2 relative l-15"></i> All Posts
+        </li>
+      </router-link>
       <li
         class="md:inline dropdown text-gray-400 mr-6 border-b md:border-transparent sm:border-gray-200 sm:hover:bg-purple-500 sm:hover:text-white sm:rounded-lg py-1.5 px-2"
       >
@@ -47,36 +54,28 @@
           </ul>
         </div>
       </li>
-
-      <router-link to="/posts/all" class="text-gray-400 mr-6">
-        <li
-          class="md:inline border-b md:border-transparent border-gray-200 py-1.5 px-2 hover:bg-purple-500 hover:text-white rounded-lg"
-        >
-          <i class="far fa-border-all mr-2 relative l-15"></i> All Posts
-        </li>
-      </router-link>
-
-      <router-link to="/posts/all" class="text-gray-400 mr-6">
-        <li
-          class="md:inline border-b md:border-transparent border-gray-200 py-1.5 px-2 hover:bg-purple-500 hover:text-white rounded-lg"
-        >
-          <i class="far fa-laptop-code mr-2"></i> C# Posts
-        </li>
-      </router-link>
-      <router-link to="/posts/all" class="text-gray-400 mr-6">
-        <li
-          class="md:inline border-b md:border-transparent border-gray-200 py-1.5 px-2 hover:bg-purple-500 hover:text-white rounded-lg"
-        >
-          <i class="fa-brands fa-vuejs mr-2"></i> Vue Js
-        </li>
-      </router-link>
-      <router-link to="/posts/all" class="text-gray-400 mr-6">
-        <li
-          class="md:inline border-b md:border-transparent border-gray-200 py-1.5 px-2 hover:bg-purple-500 hover:text-white rounded-lg"
-        >
-          <i class="far fa-diagram-next mr-2"></i> 3D Models
-        </li>
-      </router-link>
+      <li
+        class="md:inline dropdown text-gray-400 mr-6 border-b md:border-transparent sm:border-gray-200 sm:hover:bg-purple-500 sm:hover:text-white sm:rounded-lg py-1.5 px-2"
+      >
+        <div class="relative md:inline-block">
+          <span class="dropbtn">
+            <i class="far fa-code mr-2 relative l-15"></i> Tools</span
+          >
+          <ul
+            class="dropdown-content min-w-max block md:hidden md:absolute md:bg-white md:rounded-lg md:shadow-lg px-3 py-3"
+          >
+            <li>
+              <a
+                href="/apps/countdown"
+                class="hover:bg-purple-500 rounded-lg text-gray-400 hover:text-white my-1.5 px-2 py-1.5 block"
+                ><span class="sm:hidden inline-block mr-2"
+                  ><i class="far fa-arrow-turn-down-right"></i> </span
+                ><span><i class="far fa-timer"></i></span> CountDown Timer</a
+              >
+            </li>
+          </ul>
+        </div>
+      </li>
     </ul>
   </div>
 </template>

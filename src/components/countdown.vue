@@ -49,19 +49,19 @@
     <div class="mt-6">
       <button
         @click="shownow = false"
-        class="border text-sm px-2 py-2 bg-white/20 text-white border-white/40 hover:bg-white/60 hover:text-gray-800 my-2"
+        class="border rounded-sm w-full text-sm px-2 py-2 bg-white/20 text-white border-white/40 hover:bg-white/60 hover:text-gray-800 my-2"
       >
         Show Current Time
       </button>
       <button
         @click="shownow = true"
-        class="border text-sm px-2 py-2 bg-white/20 text-white border-white/40 hover:bg-white/60 hover:text-gray-800 my-2"
+        class="border w-full rounded-sm text-sm px-2 py-2 bg-white/20 text-white border-white/40 hover:bg-white/60 hover:text-gray-800 my-2"
       >
         Countdown
       </button>
     </div>
     <div
-      class="mt-4 font-bold text-xl text-white tracking-wider border-b p-3 border-b-white"
+      class="mt-4 font-bold text-xl text-white tracking-wider border-b p-3 border-b-white w-full"
     >
       <i class="far fa-clock-two"></i> CountDown
     </div>
@@ -82,9 +82,16 @@
 
     <button
       @click="calculateRemainTime"
-      class="border text-sm px-2 py-2 bg-white/20 text-white border-white/40 hover:bg-white/60 hover:text-gray-800 mt-4"
+      class="border rounded-sm w-full text-sm px-2 py-2 bg-white/20 text-white border-white/40 hover:bg-white/60 hover:text-gray-800 mt-4"
     >
       Calculate Remain Time
+    </button>
+
+    <button
+      @click="clearRemain"
+      class="border rounded-sm w-full text-sm px-2 py-2 bg-white/20 text-white border-white/40 hover:bg-white/60 hover:text-gray-800 mt-4"
+    >
+      Clear
     </button>
   </div>
   <a href="/" class="st fixed right-20 bottom-8 text-white/40 text-2xl cursor-pointer">
@@ -155,6 +162,17 @@ export default {
       }, 1000);
     },
 
+    clearRemain() {
+      localStorage.removeItem("selectedDateTime");
+      var id = window.setInterval(function () {}, 0);
+      while (id--) {
+        window.clearInterval(id);
+      }
+      this.minutes = "0";
+      this.hours = "0";
+      this.days = "0";
+      this.seconds = "0";
+    },
     calculateRemainTime() {
       const date = new Date(this.hedeftarih + " " + this.hedefsaat).valueOf();
 
